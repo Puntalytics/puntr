@@ -1,11 +1,16 @@
 Package: puntr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Analysis of Punting
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: person("Dennis", "Brookner", email = "debrookner@gmail.com",
+  role = c("aut", "cre"))
+Description: A package for importing, manipulating, analyzing, and visualizing data
+    related to football punting.  Uses play-by-play dataframes in the format used
+    by nflscrapR and nflfastR.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+
+Imports:
+    glue,
+    dplyr
