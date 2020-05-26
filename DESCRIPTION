@@ -12,5 +12,10 @@ Encoding: UTF-8
 LazyData: true
 
 Imports:
+    dplyr,
     glue,
-    dplyr
+    purrr,
+    readr,
+    stringr,
+    tibble,
+    
