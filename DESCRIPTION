@@ -14,8 +14,8 @@ LazyData: true
 Imports:
     dplyr,
     glue,
+    magrittr,
     purrr,
     readr,
     stringr,
     tibble,
-    
