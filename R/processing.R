@@ -26,19 +26,19 @@ trust_the_process <- function(punts) {
 # Sometimes, the punter's name isn't properly parsed from the play description, so let's do that manually
 fix_na <- function(punts) {
   punts$punter_player_name[is.na(punts$punter_player_name)] <-
-    punts$desc[is.na(punts$punter_player_name)] %>% str_extract('[:upper:].[:upper:][:lower:]*')
+    punts$desc[is.na(punts$punter_player_name)] %>% stringr::str_extract('[:upper:].[:upper:][:lower:]*')
 
   punts$GrossYards[is.na(punts$GrossYards)] <-
-    punts$desc[is.na(punts$GrossYards)] %>% str_extract('[:digit:]+ yard') %>%
-    str_extract('[:digit:]+') %>% as.numeric()
+    punts$desc[is.na(punts$GrossYards)] %>% stringr::str_extract('[:digit:]+ yard') %>%
+    stringr::str_extract('[:digit:]+') %>% as.numeric()
 
   punts$return_yards[is.na(punts$return_yards)] <-
-    punts$desc[is.na(punts$return_yards)] %>% str_extract('for [:digit:]+') %>%
-    str_extract('[:digit:]+') %>% as.numeric()
+    punts$desc[is.na(punts$return_yards)] %>% stringr::str_extract('for [:digit:]+') %>%
+    stringr::str_extract('[:digit:]+') %>% as.numeric()
 
-  punts <- punts %>% filter(!is.na(GrossYards))
-  punts <- punts %>% filter(!is.na(return_yards))
-  punts <- punts %>% filter(!is.na(punter_player_name))
+  punts <- punts %>% dplyr::filter(!is.na(GrossYards))
+  punts <- punts %>% dplyr::filter(!is.na(return_yards))
+  punts <- punts %>% dplyr::filter(!is.na(punter_player_name))
 
   return(punts)
 }
@@ -69,7 +69,7 @@ fix_na <- function(punts) {
 # Remove blocked punts
 # Inputs and outputs a dataframe "punts"
 remove_blocks <- function(punts) {
-  punts <- punts %>% filter(punt_blocked==0)
+  punts <- punts %>% dplyr::filter(punt_blocked==0)
   return(punts)
 }
 
@@ -77,12 +77,12 @@ remove_blocks <- function(punts) {
 # Inputs and outputs a dataframe "punts"
 note_scores <- function(punts) {
   # All TDs
-  punts <- punts %>% add_column(TDany = if_else(str_detect(punts$desc, 'TOUCHDOWN'), 1, 0))
+  punts <- punts %>% tibble::add_column(TDany = dplyr::if_else(stringr::str_detect(punts$desc, 'TOUCHDOWN'), 1, 0))
   # muffs
-  punts <- punts %>% add_column(punt_fumble = if_else(str_detect(punts$desc, 'RECOVERED'), 1, 0))
+  punts <- punts %>% tibble::add_column(punt_fumble = dplyr::if_else(stringr::str_detect(punts$desc, 'RECOVERED'), 1, 0))
   # TD returns
   punts <- punts %>%
-    add_column(TDreturn = if_else(punts$TDany==1 & punts$punt_fumble==0 & !str_detect(punts$desc, 'NULLIFIED'),
+    add_column(TDreturn = dplyr::if_else(punts$TDany==1 & punts$punt_fumble==0 & !stringr::str_detect(punts$desc, 'NULLIFIED'),
                                   1, 0))
 
   return(punts)
@@ -93,7 +93,7 @@ note_scores <- function(punts) {
 remove_scores <- function(punts) {
 
   punts <- punts %>% note_scores()  # note scores but don't remove them yet
-  punts <- punts %>% filter(punt_fumble==0 & TDany==0) # remove scores
+  punts <- punts %>% dplyr::filter(punt_fumble==0 & TDany==0) # remove scores
 
   return(punts)
 }
@@ -122,7 +122,7 @@ remove_scores <- function(punts) {
 # Note - this function can be used on a dataframe that contains plays other than punts
 add_YFOEZ <- function(punts) {
 
-  punts <- punts %>% add_column(YardsFromOwnEndZone = 100 - punts$yardline_100)
+  punts <- punts %>% tibble::add_column(YardsFromOwnEndZone = 100 - punts$yardline_100)
 
   return(punts)
 }
@@ -132,14 +132,14 @@ add_YFOEZ <- function(punts) {
 #
 # Rename the ugly kick_distance to GrossYards so it looks nice as an axis label
 add_GrossYards <- function(punts) {
-  punts <- punts %>% rename(GrossYards = kick_distance)
+  punts <- punts %>% dplyr::rename(GrossYards = kick_distance)
   return(punts)
 }
 
 # Calculate normal net, which annoyingly isn't in the dataframe to begin with
 # Inputs and outputs a dataframe "punts"
 calculate_net <- function(punts) {
-  punts <- punts %>% add_column(NetYards = punts$GrossYards - punts$return_yards)
+  punts <- punts %>% tibble::add_column(NetYards = punts$GrossYards - punts$return_yards)
   return(punts)
 }
 
@@ -152,6 +152,6 @@ calculate_net <- function(punts) {
 # Note that none of our actual metrics depend on this threshold; it's just a way to categorize situations and
 # performance in those situations
 label_type <- function(punts, threshold=41) {
-  punts <- punts %>% add_column(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
+  punts <- punts %>% tibble::add_column(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
   return(punts)
 }
