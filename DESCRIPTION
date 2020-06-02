@@ -1,7 +1,7 @@
 Package: puntr
 Type: Package
 Title: Analysis of Punting
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Dennis", "Brookner", email = "debrookner@gmail.com",
   role = c("aut", "cre"))
 Description: A package for importing, manipulating, analyzing, and visualizing data
