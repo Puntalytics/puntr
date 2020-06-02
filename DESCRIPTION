@@ -13,6 +13,8 @@ LazyData: true
 
 Imports:
     dplyr,
+    ggplot,
+    ggrepel,
     glue,
     magrittr,
     purrr,
