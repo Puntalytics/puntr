@@ -44,6 +44,7 @@ create_mini <- function(punts, parameter=NA, threshold=32) {
 # add_logos <- function(mini, )
 
 calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
+
   if(is.na(parameter)) {
 
     # add stats to mini
@@ -64,6 +65,8 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
       mini$SHARPnet_PD[i] <- round(mean(punts$SHARPnet_PD[punts$punter_player_name == mini$Punter[i]], na.rm=TRUE), digits=digits)
       mini$SHARP_RERUN_OF[i] <- round(mean(punts$SHARP_RERUN_OF[punts$punter_player_name == mini$Punter[i]], na.rm=TRUE), digits=digits)
       mini$SHARP_RERUN_PD[i] <- round(mean(punts$SHARP_RERUN_PD[punts$punter_player_name == mini$Punter[i]], na.rm=TRUE), digits=digits)
+
+      mini$temperature[i] <- round(mean(punts$temperature[punts$punter_player_name == mini$Punter[i]], na.rm=TRUE), digits=digits)
 
       #mini$PEAR[i] <- round(mean(punts$PEAR[punts$punter_player_name == mini$Punter[i]]), digits=digits)
       #mini$PEARnet[i] <- round(mean(punts$PEARnet[punts$punter_player_name == mini$Punter[i]]), digits=digits)
@@ -91,6 +94,8 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
       mini$SHARPnet_PD[i] <- round(mean(punts$SHARPnet_PD[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
       mini$SHARP_RERUN_OF[i] <- round(mean(punts$SHARP_RERUN_OF[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
       mini$SHARP_RERUN_PD[i] <- round(mean(punts$SHARP_RERUN_PD[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
+
+      mini$temperature[i] <- round(mean(punts$temperature[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
 
       # mini$PEAR[i] <- round(mean(punts$PEAR[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
       # mini$PEARnet[i] <- round(mean(punts$PEARnet[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)

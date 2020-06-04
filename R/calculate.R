@@ -72,7 +72,7 @@ calculate_rerun <- function(punts) {
   # column is NA for punts that aren't returned; those will be omitted from the regression
   punts <- punts %>% tibble::add_column(returned =
                                   dplyr::if_else(punts$punt_out_of_bounds==0 & punts$punt_downed==0 &
-                                            punts$punt_fair_catch==0 & punts$tb==0, 1, 0))
+                                            punts$punt_fair_catch==0 & punts$touchback==0, 1, 0))
 
   punts <- punts %>% tibble::add_column(return_yards_r =
                                   ifelse(punts$returned==1, punts$return_yards, NA))
