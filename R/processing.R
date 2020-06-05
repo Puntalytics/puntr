@@ -10,9 +10,9 @@
 trust_the_process <- function(punts) {
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
-  punts <- punts %>% remove_blocks()
+  #punts <- punts %>% remove_blocks()
   # punts <- punts %>% add_season()
-  punts <- punts %>% remove_scores()
+  #punts <- punts %>% remove_scores()
   # punts <- punts %>% fix_touchbacks()
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
