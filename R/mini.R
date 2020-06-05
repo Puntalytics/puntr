@@ -23,13 +23,13 @@ create_mini <- function(punts, parameter=NA, threshold=32) {
 
     # miniY - comparing punter years to each other
     punter_temp <- unique(punts$punter_player_name)
-    year_temp <- unique(punts$Year)
+    year_temp <- unique(punts$season)
     mini <- dplyr::tibble(Punter = NA, year = NA)
 
     # did a punter punt that year?  If so, make a row for that year of that punter
     for(i in 1:length(year_temp)) {
       for(j in 1:length(punter_temp)) {
-        if(length(punts$Year[punts$Year==year_temp[i] & punts$punter_player_name==punter_temp[j]]) > threshold) {
+        if(length(punts$season[punts$season==year_temp[i] & punts$punter_player_name==punter_temp[j]]) > threshold) {
           mini <- mini %>% dplyr::add_row(Punter = punter_temp[j], year = year_temp[i])
         }
       }
@@ -50,7 +50,7 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
     # add stats to mini
     for(i in 1:length(mini$Punter)) {
 
-      mini$NumPunts[i] <- length(punts$X1[punts$punter_player_name == mini$Punter[i]])
+      mini$NumPunts[i] <- length(punts$X[punts$punter_player_name == mini$Punter[i]])
       mini$Gross[i] <- round(mean(punts$GrossYards[punts$punter_player_name == mini$Punter[i]]), digits=digits)
       mini$Net[i] <- round(mean(punts$NetYards[punts$punter_player_name == mini$Punter[i]]), digits=digits)
       mini$RERUN[i] <- round(mean(punts$RERUN[punts$punter_player_name == mini$Punter[i]]), digits=digits)
@@ -79,27 +79,27 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
     # add stats to mini
     for(i in 1:length(mini$Punter)) {
 
-      mini$NumPunts[i] <- length(punts$X1[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]])
-      mini$Gross[i] <- round(mean(punts$GrossYards[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      mini$Net[i] <- round(mean(punts$NetYards[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      mini$RERUN[i] <- round(mean(punts$RERUN[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
+      mini$NumPunts[i] <- length(punts$X[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]])
+      mini$Gross[i] <- round(mean(punts$GrossYards[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      mini$Net[i] <- round(mean(punts$NetYards[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      mini$RERUN[i] <- round(mean(punts$RERUN[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
 
-      mini$SHARP[i] <- round(mean(punts$SHARP[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      mini$SHARPnet[i] <- round(mean(punts$SHARPnet[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      mini$SHARP_RERUN[i] <- round(mean(punts$SHARP_RERUN[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
+      mini$SHARP[i] <- round(mean(punts$SHARP[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      mini$SHARPnet[i] <- round(mean(punts$SHARPnet[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      mini$SHARP_RERUN[i] <- round(mean(punts$SHARP_RERUN[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
 
-      mini$SHARP_OF[i] <- round(mean(punts$SHARP_OF[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
-      mini$SHARP_PD[i] <- round(mean(punts$SHARP_PD[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
-      mini$SHARPnet_OF[i] <- round(mean(punts$SHARPnet_OF[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
-      mini$SHARPnet_PD[i] <- round(mean(punts$SHARPnet_PD[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
-      mini$SHARP_RERUN_OF[i] <- round(mean(punts$SHARP_RERUN_OF[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
-      mini$SHARP_RERUN_PD[i] <- round(mean(punts$SHARP_RERUN_PD[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARP_OF[i] <- round(mean(punts$SHARP_OF[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARP_PD[i] <- round(mean(punts$SHARP_PD[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARPnet_OF[i] <- round(mean(punts$SHARPnet_OF[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARPnet_PD[i] <- round(mean(punts$SHARPnet_PD[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARP_RERUN_OF[i] <- round(mean(punts$SHARP_RERUN_OF[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$SHARP_RERUN_PD[i] <- round(mean(punts$SHARP_RERUN_PD[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
 
-      mini$temperature[i] <- round(mean(punts$temperature[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]], na.rm=TRUE), digits=digits)
+      mini$temperature[i] <- round(mean(punts$temperature[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]], na.rm=TRUE), digits=digits)
 
-      # mini$PEAR[i] <- round(mean(punts$PEAR[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      # mini$PEARnet[i] <- round(mean(punts$PEARnet[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
-      # mini$PEAR_RERUN[i] <- round(mean(punts$PEAR_RERUN[punts$punter_player_name == mini$Punter[i] & punts$Year==mini$year[i]]), digits=digits)
+      # mini$PEAR[i] <- round(mean(punts$PEAR[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      # mini$PEARnet[i] <- round(mean(punts$PEARnet[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
+      # mini$PEAR_RERUN[i] <- round(mean(punts$PEAR_RERUN[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
     }
     return(mini)
   }
