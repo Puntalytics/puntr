@@ -107,13 +107,13 @@ remove_scores <- function(punts) {
 # you can do so by setting correction=0
 # We recommend using this default value of correcton=20, representing the actual field-position
 # result of a touchback
-# fix_touchbacks <- function(punts, correction=20) {
-#
-#   punts <- punts %>% add_column(tb = if_else(str_detect(punts$desc, 'Touchback'), 1, 0))
-#   punts$GrossYards[punts$tb==1] <- punts$yardline_100[punts$tb==1] - correction
-#
-#   return(punts)
-# }
+fix_touchbacks <- function(punts, correction=20) {
+
+   punts <- punts %>% add_column(tb = if_else(str_detect(punts$desc, 'Touchback'), 1, 0))
+   punts$GrossYards[punts$tb==1] <- punts$yardline_100[punts$tb==1] - correction
+
+   return(punts)
+ }
 
 # Add YardsFromOwnEndZone to data frame
 # Inputs and outputs a dataframe "punts"
