@@ -50,7 +50,7 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
     # add stats to mini
     for(i in 1:length(mini$Punter)) {
 
-      mini$NumPunts[i] <- length(punts$X[punts$punter_player_name == mini$Punter[i]])
+      mini$NumPunts[i] <- sum(punts$punter_player_name == mini$Punter[i])
       mini$Gross[i] <- round(mean(punts$GrossYards[punts$punter_player_name == mini$Punter[i]]), digits=digits)
       mini$Net[i] <- round(mean(punts$NetYards[punts$punter_player_name == mini$Punter[i]]), digits=digits)
       mini$RERUN[i] <- round(mean(punts$RERUN[punts$punter_player_name == mini$Punter[i]]), digits=digits)
@@ -79,7 +79,7 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
     # add stats to mini
     for(i in 1:length(mini$Punter)) {
 
-      mini$NumPunts[i] <- length(punts$X[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]])
+      mini$NumPunts[i] <- sum(punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i])
       mini$Gross[i] <- round(mean(punts$GrossYards[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
       mini$Net[i] <- round(mean(punts$NetYards[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
       mini$RERUN[i] <- round(mean(punts$RERUN[punts$punter_player_name == mini$Punter[i] & punts$season==mini$year[i]]), digits=digits)
@@ -104,3 +104,4 @@ calculate_all_mini <- function(mini, punts, parameter=NA, digits=2) {
     return(mini)
   }
 }
+
