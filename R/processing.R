@@ -13,7 +13,7 @@ trust_the_process <- function(punts) {
   #punts <- punts %>% remove_blocks()
   # punts <- punts %>% add_season()
   #punts <- punts %>% remove_scores()
-  # punts <- punts %>% fix_touchbacks()
+  punts <- punts %>% fix_touchbacks()
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
   punts <- punts %>% label_type()
