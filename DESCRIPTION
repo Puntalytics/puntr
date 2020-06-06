@@ -1,7 +1,7 @@
 Package: puntr
 Type: Package
 Title: Analysis of Punting
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Dennis", "Brookner", email = "debrookner@gmail.com",
   role = c("aut", "cre"))
 Description: A package for importing, manipulating, analyzing, and visualizing data
@@ -13,10 +13,12 @@ LazyData: true
 
 Imports:
     dplyr,
+    ggimage,
     ggplot,
     ggrepel,
     glue,
     magrittr,
+    nflfastR,
     purrr,
     readr,
     stringr,
