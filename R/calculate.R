@@ -24,7 +24,30 @@ calculate_all <- function(punts
 # Inputs and outputs a dataframe "punts"
 #
 # Calculate for gross (no parameter), parameter = "net", or parameter = "RERUN"
-calculate_sharp <- function(punts, parameter=NA) {
+
+calculate_sharp <- function(punts) {
+
+  sharp_model <- function(input) {
+    loess(formula = GrossYards ~ yardline_100, data = input, model=T, span=.75, na.action = na.exclude)
+  }
+
+  punts <- punts %>%
+    dplyr::group_by(season) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(model = purrr::map(data, sharp_model))
+
+  punts <- punts %>%
+    dplyr::mutate(yard_smooth = purrr::map2(data, model, predict))
+#
+#   punts <- punts %>% tidyr::unnest(data)
+#
+#   punts <- punts %>%
+#     dplyr::mutate(yard_smooth = purrr::map(predict(model)))
+
+  return(punts)
+}
+
+calculate_sharp_old <- function(punts, parameter=NA) {
   if(is.na(parameter)) {
     punts <- punts %>% tibble::add_column(yard_smooth =
                                     loess(formula = GrossYards ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
