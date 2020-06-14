@@ -17,6 +17,7 @@ trust_the_process <- function(punts) {
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
   punts <- punts %>% label_type()
+  punts <- punts %>% add_logos()
 
   return(punts)
 }
