@@ -34,10 +34,13 @@ calculate_sharp <- function(punts) {
   punts <- punts %>%
     dplyr::group_by(season) %>%
     tidyr::nest() %>%
-    dplyr::mutate(model = purrr::map(data, sharp_model))
+    dplyr::mutate(model = purrr::map(data, sharp_model)) %>%
+    dplyr::mutate(yard_smooth = purrr::map(model, predict)) %>%
+    tidyr::unnest(c(data, yard_smooth))
 
-  punts <- punts %>%
-    dplyr::mutate(yard_smooth = purrr::map2(data, model, predict))
+
+#  punts <- punts %>%
+#    dplyr::mutate(yard_smooth = purrr::map2(data, model, predict))
 #
 #   punts <- punts %>% tidyr::unnest(data)
 #
