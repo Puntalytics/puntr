@@ -11,8 +11,8 @@ calculate_all <- function(punts
 
   punts <- punts %>% calculate_rerun()
   punts <- punts %>% calculate_sharp()
-  punts <- punts %>% calculate_sharp(parameter = "net")
-  punts <- punts %>% calculate_sharp(parameter = "RERUN")
+  #punts <- punts %>% calculate_sharp(parameter = "net")
+  #punts <- punts %>% calculate_sharp(parameter = "RERUN")
   # punts < - calculate_pear(punts, plays)
   # punts <- calculate_pear(punts, plays, parameter = "net")
   # punts <- calculate_pear(punts, plays, parameter = "RERUN")
@@ -51,57 +51,6 @@ calculate_sharp <- function(punts) {
     dplyr::mutate(SHARPnet_PD = purrr::pmap_dbl(list(PD==1, SHARPnet, NA_real_), dplyr::if_else)) %>%
     dplyr::mutate(SHARPnet_OF = purrr::pmap_dbl(list(PD==0, SHARPnet, NA_real_), dplyr::if_else))
 
-
-
-
-#  punts <- punts %>%
-#    dplyr::mutate(yard_smooth = purrr::map2(data, model, predict))
-#
-#   punts <- punts %>% tidyr::unnest(data)
-#
-#   punts <- punts %>%
-#     dplyr::mutate(yard_smooth = purrr::map(predict(model)))
-
-  return(punts)
-}
-
-calculate_sharp_old <- function(punts, parameter=NA) {
-  if(is.na(parameter)) {
-    punts <- punts %>% tibble::add_column(yard_smooth =
-                                    loess(formula = GrossYards ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
-                                  %>% predict())
-
-    # center punts around 100
-    punts <- punts %>% tibble::add_column(SHARP = punts$GrossYards / punts$yard_smooth * 100)
-
-    punts <- punts %>% tibble::add_column(SHARP_PD = ifelse(punts$PD==1, punts$SHARP, NA))
-    punts <- punts %>% tibble::add_column(SHARP_OF = ifelse(punts$PD==0, punts$SHARP, NA))
-
-  } else if(parameter=="net") {
-
-    punts <- punts %>% tibble::add_column(yard_smooth_net =
-                                    loess(formula = NetYards ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
-                                  %>% predict())
-
-    # center punts
-    punts <- punts %>% tibble::add_column(SHARPnet = punts$NetYards / punts$yard_smooth_net * 100)
-
-    punts <- punts %>% tibble::add_column(SHARPnet_PD = ifelse(punts$PD==1, punts$SHARPnet, NA))
-    punts <- punts %>% tibble::add_column(SHARPnet_OF = ifelse(punts$PD==0, punts$SHARPnet, NA))
-
-  } else if(parameter=="RERUN") {
-
-    punts <- punts %>% tibble::add_column(yard_smooth_rerun =
-                                    loess(formula = RERUN ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
-                                  %>% predict())
-
-    # center punts
-    punts <- punts %>% tibble::add_column(SHARP_RERUN = punts$RERUN / punts$yard_smooth_rerun * 100)
-
-    punts <- punts %>% tibble::add_column(SHARP_RERUN_PD = ifelse(punts$PD==1, punts$SHARP_RERUN, NA))
-    punts <- punts %>% tibble::add_column(SHARP_RERUN_OF = ifelse(punts$PD==0, punts$SHARP_RERUN, NA))
-  }
-
   return(punts)
 }
 
@@ -109,25 +58,41 @@ calculate_sharp_old <- function(punts, parameter=NA) {
 # Inputs and outputs a dataframe "punts"
 calculate_rerun <- function(punts) {
 
+  rerun_model <- function(input) {
+    loess(formula = return_yards_r ~ kick_distance_r, data = input, span=0.65, na.action = na.exclude)
+  }
+
   # new column with actual returns
   # column is NA for punts that aren't returned; those will be omitted from the regression
-  punts <- punts %>% tibble::add_column(returned =
-                                  dplyr::if_else(punts$punt_out_of_bounds==0 & punts$punt_downed==0 &
-                                            punts$punt_fair_catch==0 & punts$touchback==0, 1, 0))
+  punts <- punts %>%
+    dplyr::mutate(returned = purrr::pmap_dbl(list(punt_out_of_bounds==0 &
+                                                    punt_downed==0 &
+                                                    punt_fair_catch==0 &
+                                                    touchback==0, 1, 0), dplyr::if_else)) %>%
+    dplyr::mutate(return_yards_r = purrr::pmap_dbl(list(returned==1, return_yards, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(kick_distance_r = purrr::pmap_dbl(list(returned==1, GrossYards, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(return_smooth = loess(formula = return_yards_r ~ kick_distance_r,
+                                        data = punts,
+                                        span=.65,
+                                        na.action = na.exclude) %>% predict) %>%
+    dplyr::mutate(RERUN = purrr::pmap_dbl(list(returned==1, kick_distance_r - return_smooth, GrossYards), dplyr::if_else))
 
-  punts <- punts %>% tibble::add_column(return_yards_r =
-                                  ifelse(punts$returned==1, punts$return_yards, NA))
+    # dplyr::mutate(returned = dplyr::if_else(punts$punt_out_of_bounds==0 & punts$punt_downed==0 &
+    #                                         punts$punt_fair_catch==0 & punts$touchback==0, 1, 0)) %>%
+    # dplyr::mutate(return_yards_r = ifelse(punts$returned==1, punts$return_yards, NA))
 
-  punts <- punts %>% tibble::add_column(kick_distance_r =
-                                  ifelse(punts$returned==1, punts$GrossYards, NA))
+  # punts <- punts %>%
+  #
+  # punts <- punts %>% dplyr::mutate(kick_distance_r =
+  #                                 ifelse(punts$returned==1, punts$GrossYards, NA))
 
   # create smoothed average return for each punt distance
   # only using returned punts, so the curve isn't biased by all the 0s
 
-  punts <- punts %>% tibble::add_column(return_smooth =
-                                  loess(formula = return_yards_r ~ kick_distance_r, data = punts,
-                                        model=T, span=.65, na.action = na.exclude)
-                                %>% predict())
+  # punts <- punts %>% dplyr::mutate(return_smooth =
+  #                                 loess(formula = return_yards_r ~ kick_distance_r, data = punts,
+  #                                       span=.65, na.action = na.exclude)
+  #                               %>% predict())
 
   # punts <- cbind(punts, return_smooth=NA_integer_)
   # smooth <- predict(loess(formula = Returns ~ kick_distance_R, data = punts, model=T, span=.65))
@@ -136,10 +101,10 @@ calculate_rerun <- function(punts) {
   # add RERUN
   # RERUN = kick_distance for non-returned punts
   # RERUN = kick_distance - return_smooth for returned punts
-  punts <- punts %>% tibble::add_column(RERUN =
-                                  dplyr::if_else(punts$returned==1,
-                                          punts$kick_distance_r - punts$return_yards_r,
-                                          punts$GrossYards))
+  # punts <- punts %>% dplyr::mutate(RERUN =
+  #                                 dplyr::if_else(punts$returned==1,
+  #                                         punts$kick_distance_r - punts$return_yards_r,
+  #                                         punts$GrossYards))
   # punts <- cbind(punts, RERUN <- NA_integer_)
   # punts$RERUN[!is.na(punts$Returns)] <- punts$kick_distance_R[!is.na(punts$Returns)] -
   #   punts$return_smooth[!is.na(punts$Returns)]
@@ -204,3 +169,54 @@ calculate_rerun <- function(punts) {
 #
 #   return(punts)
 # }
+
+
+# calculate_sharp_old <- function(punts, parameter=NA) {
+#   if(is.na(parameter)) {
+#     punts <- punts %>% dplyr::mutate(yard_smooth =
+#                                        loess(formula = GrossYards ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
+#                                      %>% predict())
+#
+#     # center punts around 100
+#     punts <- punts %>% dplyr::mutate(SHARP = punts$GrossYards / punts$yard_smooth * 100)
+#
+#     punts <- punts %>% dplyr::mutate(SHARP_PD = ifelse(punts$PD==1, punts$SHARP, NA))
+#     punts <- punts %>% dplyr::mutate(SHARP_OF = ifelse(punts$PD==0, punts$SHARP, NA))
+#
+#   } else if(parameter=="net") {
+#
+#     punts <- punts %>% dplyr::mutate(yard_smooth_net =
+#                                        loess(formula = NetYards ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
+#                                      %>% predict())
+#
+#     # center punts
+#     punts <- punts %>% dplyr::mutate(SHARPnet = punts$NetYards / punts$yard_smooth_net * 100)
+#
+#     punts <- punts %>% dplyr::mutate(SHARPnet_PD = ifelse(punts$PD==1, punts$SHARPnet, NA))
+#     punts <- punts %>% dplyr::mutate(SHARPnet_OF = ifelse(punts$PD==0, punts$SHARPnet, NA))
+#
+#   } else if(parameter=="RERUN") {
+#
+#     punts <- punts %>% dplyr::mutate(yard_smooth_rerun =
+#                                        loess(formula = RERUN ~ yardline_100, data = punts, model=T, span=.75, na.action = na.exclude)
+#                                      %>% predict())
+#
+#     # center punts
+#     punts <- punts %>% dplyr::mutate(SHARP_RERUN = punts$RERUN / punts$yard_smooth_rerun * 100)
+#
+#     punts <- punts %>% dplyr::mutate(SHARP_RERUN_PD = ifelse(punts$PD==1, punts$SHARP_RERUN, NA))
+#     punts <- punts %>% dplyr::mutate(SHARP_RERUN_OF = ifelse(punts$PD==0, punts$SHARP_RERUN, NA))
+#   }
+#
+#   return(punts)
+# }
+
+
+#  punts <- punts %>%
+#    dplyr::mutate(yard_smooth = purrr::map2(data, model, predict))
+#
+#   punts <- punts %>% tidyr::unnest(data)
+#
+#   punts <- punts %>%
+#     dplyr::mutate(yard_smooth = purrr::map(predict(model)))
+
