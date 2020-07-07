@@ -28,7 +28,11 @@ calculate_all <- function(punts
 calculate_sharp <- function(punts) {
 
   sharp_model <- function(input) {
-    loess(formula = GrossYards ~ yardline_100, data = input, model=T, span=.75, na.action = na.exclude)
+    loess(formula = GrossYards ~ yardline_100, data = input, span=0.8, na.action = na.exclude)
+  }
+
+  sharpnet_model <- function(input) {
+    loess(formula = NetYards ~ yardline_100, data = input, span=0.9, na.action = na.exclude)
   }
 
   punts <- punts %>%
@@ -36,7 +40,18 @@ calculate_sharp <- function(punts) {
     tidyr::nest() %>%
     dplyr::mutate(model = purrr::map(data, sharp_model)) %>%
     dplyr::mutate(yard_smooth = purrr::map(model, predict)) %>%
-    tidyr::unnest(c(data, yard_smooth))
+    dplyr::mutate(model_net = purrr::map(data, sharpnet_model)) %>%
+    dplyr::mutate(yard_smooth_net = purrr::map(model_net, predict)) %>%
+    tidyr::unnest(c(data, yard_smooth, yard_smooth_net)) %>%
+    subset(select = -c(model, model_net)) %>%
+    dplyr::mutate(SHARP = GrossYards/yard_smooth * 100) %>%
+    dplyr::mutate(SHARP_PD = purrr::pmap_dbl(list(PD==1, SHARP, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(SHARP_OF = purrr::pmap_dbl(list(PD==0, SHARP, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(SHARPnet = NetYards/yard_smooth_net * 100) %>%
+    dplyr::mutate(SHARPnet_PD = purrr::pmap_dbl(list(PD==1, SHARPnet, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(SHARPnet_OF = purrr::pmap_dbl(list(PD==0, SHARPnet, NA_real_), dplyr::if_else))
+
+
 
 
 #  punts <- punts %>%

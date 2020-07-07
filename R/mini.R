@@ -40,10 +40,10 @@ create_miniY <- function(punts, threshold=32) {
                      SHARP_PD = mean(SHARP_PD, na.rm = TRUE),
                      SHARPnet = mean(SHARPnet),
                      SHARPnet_OF = mean(SHARPnet_OF, na.rm = TRUE),
-                     SHARPnet_PD = mean(SHARPnet_PD, na.rm = TRUE),
-                     SHARP_RERUN = mean(SHARP_RERUN),
-                     SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
-                     SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE)
+                     SHARPnet_PD = mean(SHARPnet_PD, na.rm = TRUE)
+                     #SHARP_RERUN = mean(SHARP_RERUN),
+                     #SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
+                     #SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE)
     )
   return(mini)
 }
