@@ -22,7 +22,9 @@ import_metadata <- function() {
 # Call this function with a range of years, e.g. import_seasons(2000:2019)
 # Data goes back to 2000, and should be updated week-by-week during whatever the current season is
 import_seasons <- function(years) {
-  years %>% purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/guga31bb/nflfastR-data/master/data/play_by_play_')
+  pbp <- years %>%
+    purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/guga31bb/nflfastR-data/master/data/play_by_play_')
+  return(pbp)
 }
 
 # Helper function for a single season
