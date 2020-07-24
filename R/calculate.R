@@ -7,9 +7,10 @@
 # Inputs and outputs a dataframe "punts"
 calculate_all <- function(punts) {
 
-  punts <- punts %>% calculate_rerun()
-  punts <- punts %>% calculate_sharp()
-  # punts < - calculate_pear(punts, plays)
+  punts <- punts %>%
+    calculate_rerun() %>%
+    calculate_sharp() %>%
+    calculate_pear()
   # punts <- calculate_pear(punts, plays, parameter = "net")
   # punts <- calculate_pear(punts, plays, parameter = "RERUN")
 
