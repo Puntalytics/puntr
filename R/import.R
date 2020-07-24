@@ -3,32 +3,39 @@
 ###|
 ###|
 
-## To start, make sure you grab the data as .rds files right from the NFLfastR-data GitHub repository:
-##      https://github.com/guga31bb/nflfastR-data.git
-## This is convenient because (we think??) this will be updated every week, and a 'git pull origin master'
-## will get you the updated data
-
-# With that done, easily import whatever seasons you'd like:
-# example call: import_seasons(2000:2019, path='stuff/football/play_by_play_')
-import_seasons <- function(years, path='~/github/nflfastR-data/data/play_by_play_') {
-  years %>% purrr::map_df(import_one_season, path=path)
+## Essentially all of the data preparation and cleaning has been done already
+# You can download a .rds file containing all of the punts here:
+import_punts <- function() {
+  punts <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/punts_all_seasons.rds') %>%
+    readr::read_rds()
+  return(punts)
 }
 
-# This function grabs just one season, but the above function will also work for one season
-import_one_season <- function(year, path='~/github/nflfastR-data/data/play_by_play_') {
-  pbp <- glue::glue('{path}{year}.rds') %>% readr::read_rds()
+# Here's the associated metadata that you might want (see the associated scraping in the pfr_metadata_pull repo)
+import_metadata <- function() {
+  metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/game_meta_data_ready_to_merge.csv') %>%
+    readr::read_rds()
+  return(metadata)
+}
+
+## You might decide you want all of the play-by-play data yourself, so you can clean/filter it as you see fit
+# Call this function with a range of years, e.g. import_seasons(2000:2019)
+# Data goes back to 2000, and should be updated week-by-week during whatever the current season is
+import_seasons <- function(years) {
+  years %>% purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/guga31bb/nflfastR-data/master/data/play_by_play_')
+}
+
+# Helper function for a single season
+import_one_season <- function(year, url) {
+  pbp <- glue::glue('{url}{year}.rds') %>%
+    url() %>%
+    readr::read_rds()
   return(pbp)
 }
 
-# We will (hopefully!) be updating the punting-specific data on our GitHub each week, but if we're
-# lagging behind, you might have a plays file that you'd like to 'trim' into a punts file;
-# You also might like to include custom columns
-
-# Punt Trim
-# Inputs a dataframe "plays"
-# Outputs a dataframe "punts", containing only the rows that contain punts,
-# and only the columns relevant to puntalytics.
-# The default columns will pretty much always do the trick.
+# This function is what we use for converting a 'plays' df to a 'punts' df
+# The punts_all_seasons file in our repo is the output of this function with the defaults
+#
 # If you'd like additional columns, include them as a second argument.
 # If you'd like to keep all columns, include the flag columns = "ALL"
 punt_trim <- function(plays, columns="STANDARD") {
