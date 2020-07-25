@@ -113,7 +113,10 @@ calculate_pear <- function(punts) {
 
   punts <- punts %>%
     dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
-    dplyr::mutate(pear = punt_epa - punt_expected_epa)
+    dplyr::mutate(punt_epa_above_average = punt_epa - punt_expected_epa)
+
+  # punts <- punts %>%
+  #   dplyr::mutate(pear = punt_epa_above_average + 0.2) # A logical but arbitrary adjustment from average to replacement
 
 
 
