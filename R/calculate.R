@@ -96,7 +96,7 @@ calculate_rerun <- function(punts) {
 calculate_pear <- function(punts) {
 
   ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/first_down_ep_reference.csv') %>%
-    readr::read_csv()
+    readr::read_csv(col_types = 'id')
   ep_ref_after<- ep_ref %>%
     dplyr::rename(YardLineAfter_For_Opponent = YardsFromOwnEndZone)
 
