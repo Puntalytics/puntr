@@ -20,6 +20,7 @@ create_mini <- function(punts, threshold=64) {
                        SHARP_RERUN = mean(SHARP_RERUN),
                        SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
                        SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
+                       PEAR = mean(pear),
                        first_year = min(season),
                        last_year = max(season)
                        )
@@ -43,7 +44,8 @@ create_miniY <- function(punts, threshold=32) {
                      SHARPnet_PD = mean(SHARPnet_PD, na.rm = TRUE),
                      SHARP_RERUN = mean(SHARP_RERUN),
                      SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
-                     SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE)
+                     SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
+                     PEAR = mean(pear)
     )
   return(mini)
 }

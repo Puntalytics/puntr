@@ -9,10 +9,9 @@ calculate_all <- function(punts) {
 
   punts <- punts %>%
     calculate_rerun() %>%
-    calculate_sharp() %>%
-    calculate_pear()
-  # punts <- calculate_pear(punts, plays, parameter = "net")
-  # punts <- calculate_pear(punts, plays, parameter = "RERUN")
+    calculate_sharp()
+  #%>%
+   # calculate_pear()
 
   return(punts)
 }
@@ -92,8 +91,6 @@ calculate_rerun <- function(punts) {
   return(punts)
 }
 
-
-
 # calculate PEAR - Punter points Expected Above Replacement
 
 calculate_pear <- function(punts) {
@@ -114,7 +111,9 @@ calculate_pear <- function(punts) {
 
   pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, span=0.8, na.action = na.exclude)
 
-  punts <- punts %>% dplyr::mutate(pear = predict(pear_model))
+  punts <- punts %>%
+    dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
+    dplyr::mutate(pear = punt_epa - punt_expected_epa)
 
 
 
