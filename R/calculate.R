@@ -9,7 +9,10 @@ calculate_all <- function(punts) {
 
   punts <- punts %>%
     calculate_rerun() %>%
-    calculate_sharp()
+    calculate_sharp() %>%
+    dplyr::mutate(returned_pd = dplyr::if_else(PD==1, returned, NA_real_)) %>%
+    dplyr::mutate(returned_of = dplyr::if_else(PD==0, returned, NA_real_))
+
   #%>%
    # calculate_pear()
 
