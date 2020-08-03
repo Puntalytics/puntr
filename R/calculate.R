@@ -11,10 +11,8 @@ calculate_all <- function(punts) {
     calculate_rerun() %>%
     calculate_sharp() %>%
     dplyr::mutate(returned_pd = dplyr::if_else(PD==1, returned, NA_real_)) %>%
-    dplyr::mutate(returned_of = dplyr::if_else(PD==0, returned, NA_real_))
-
-  #%>%
-   # calculate_pear()
+    dplyr::mutate(returned_of = dplyr::if_else(PD==0, returned, NA_real_)) %>%
+    calculate_punt_epa()
 
   return(punts)
 }
@@ -96,7 +94,27 @@ calculate_rerun <- function(punts) {
 
 # calculate PEAR - Punter points Expected Above Replacement
 
-calculate_pear <- function(punts) {
+calculate_punt_epa <- function(punts) {
+
+  ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/fourth_down_ep_reference.csv') %>%
+    readr::read_csv(col_types = 'id')
+  ep_ref_after <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/first_down_ep_reference.csv') %>%
+    readr::read_csv(col_types = 'id') %>%
+    dplyr::rename(YardLineAfter_For_Opponent = YardsFromOwnEndZone)
+
+  punts <- punts %>%
+    dplyr::left_join(ep_ref) %>%
+    dplyr::rename(ep_before = fourth_down_ep) %>%
+    dplyr::mutate(YardLineAfter_For_Opponent = 100 - round((YardsFromOwnEndZone + RERUN))) %>%
+    dplyr::left_join(ep_ref_after) %>%
+    dplyr::rename(ep_after = first_down_ep) %>%
+    dplyr::mutate(ep_after = -ep_after) %>%
+    dplyr::mutate(punt_epa = ep_after - ep_before)
+
+  return(punts)
+}
+
+calculate_pear_first <- function(punts) {
 
   ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/first_down_ep_reference.csv') %>%
     readr::read_csv(col_types = 'id')
@@ -112,43 +130,14 @@ calculate_pear <- function(punts) {
     dplyr::mutate(ep_after = -ep_after) %>%
     dplyr::mutate(punt_epa = ep_after - ep_before)
 
-  pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, span=0.8, na.action = na.exclude)
+  #pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, span=0.8, na.action = na.exclude)
 
-  punts <- punts %>%
-    dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
-    dplyr::mutate(punt_epa_above_average = punt_epa - punt_expected_epa)
+  # punts <- punts %>%
+  #   dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
+  #   dplyr::mutate(punt_epa_above_average = punt_epa - punt_expected_epa)
 
   # punts <- punts %>%
   #   dplyr::mutate(pear = punt_epa_above_average + 0.2) # A logical but arbitrary adjustment from average to replacement
-
-
-
-  # if(is.na(parameter)) {
-  #
-  #   # add ep_dest to punts. This is the EP for the yard line at which the punt lands
-  #   punts$ep_dest <- ep_table$ep_smooth[punts$YardsFromOwnEndZone + punts$PuntDistance]
-  #
-  #   # now smooth this in punt world
-  #   punts$ep_dsmooth <- predict(loess(formula = punts$ep_dest ~ punts$YardsFromOwnEndZone),
-  #                                              data = punts, model=T, span=.5)
-  #   # Calculate PEAR
-  #   # subtract ep_dsmooth from each punt's ep_dest and adjust by 0.2 to get replacement instead of average
-  #   #arbitrary
-  #   punts$PEAR = punts$ep_dest - punts$ep_dsmooth + 0.2
-  #
-  # } else if(parameter=="net") {
-  #   # no comments in these two sections, because it's all the same
-  #   punts$ep_dest_net <- ep_table$ep_smooth[punts$YardsFromOwnEndZone + punts$net]
-  #   punts$ep_dsmooth_net <- predict(loess(formula = punts$ep_dest_net ~ punts$YardsFromOwnEndZone),
-  #                                              data = punts, model=T, span=.5)
-  #   punts$PEARnet = punts$ep_dest_net - punts$ep_dsmooth_net
-  # # } else if(parameter=="RERUN") {
-  # #   # no comments in these two sections, because it's all the same
-  # #   punts$ep_dest_rerun <- ep_table$ep_smooth[punts$YardsFromOwnEndZone + as.integer(round(punts$RERUN, digits=0))]
-  # #   punts$ep_dsmooth_rerun <- predict(loess(formula = punts$ep_dest_rerun ~ punts$YardsFromOwnEndZone),
-  # #                                   data = punts, model=T, span=.5)
-  # #   punts$PEAR_RERUN = punts$ep_dest_rerun - punts$ep_dsmooth_rerun + 0.2
-  # }
 
   return(punts)
 }
