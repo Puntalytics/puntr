@@ -3,6 +3,13 @@
 ###| Create a dataframe where each punter appears once
 ###|
 
+#' Summarize data for players
+#'
+#' @param punts The play-by-play punting data to be summarized
+#' @param threshold The minimum number of career punts needed to be included, defaults to 64
+#' @return A tibble \code{mini} where each row is a punter and each column is a stat
+#' @examples
+#' mini <- create_mini(punts)
 #' @export
 create_mini <- function(punts, threshold=64) {
 
@@ -33,6 +40,13 @@ create_mini <- function(punts, threshold=64) {
     return(mini)
 }
 
+#' Summarize data for player-seasons
+#'
+#' @param punts The play-by-play punting data to be summarized
+#' @param threshold The minimum number of punts for a season to be included, defaults to 32
+#' @return A tibble \code{miniY} where each row is a punter-season and each column is a stat
+#' @examples
+#' miniY <- create_miniY(punts)
 #' @export
 create_miniY <- function(punts, threshold=32) {
 

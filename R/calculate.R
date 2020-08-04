@@ -5,6 +5,12 @@
 
 # Calculate All
 # Inputs and outputs a dataframe "punts"
+#' Calculate metrics
+#'
+#' @param punts The already-processed play-by-play punting data to which metrics will be added
+#' @return A tibble \code{punts} with the calculated metrics added
+#' @examples
+#' punts <- calculate_all(punts)
 #' @export
 calculate_all <- function(punts) {
 

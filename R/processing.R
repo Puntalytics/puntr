@@ -7,6 +7,14 @@
 # Inputs and outputs a dataframe "punts"
 #
 # Read on for details about the functions individually, or don't!  This function will usually do the trick
+#' Clean and process play-by-play punting data
+#'
+#' @param punts The play-by-play punting data to be cleaned and processed
+#' @param trim Specify \code{trim=FALSE} if you would like to use puntr::punt_trim to create custom columns
+#' @return A tibble \code{punts} with cleaned and processed play-by-play punting data
+#' @examples
+#' punts <- trust_the_process(punts)
+#' punts <- trust_the_process(punts_custom_trimmed_already, trim=FALSE)
 #' @export
 trust_the_process <- function(punts, trim=TRUE) {
   if(trim) {
@@ -27,22 +35,24 @@ trust_the_process <- function(punts, trim=TRUE) {
 # Trim down to only the columns you're likely to need for puntalytics
 # If you'd like additional columns, include them as a second argument.
 # If you'd like to keep all columns, include the flag columns = "ALL"
+#' Filter columns relevant to punting
+#'
+#' @param punts The play-by-play punting data
+#' @param columns Defaults to \code{"STANDARD"} indicating trimming down to the default columns.  If \code{columns} is a list of other columns, those will additionally included
+#' @return A tibble \code{punts} containing only the specified columns
+#' @examples
+#' punts <- punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
 #' @export
 punt_trim <- function(punts, columns="STANDARD") {
 
-  if(columns=="ALL"){
-    return(punts)
-
-  } else {
+  if(columns=="STANDARD") {
     punt_columns <- c("play_id", "game_id", "home_team", "away_team", "posteam", "defteam", "game_date",
                       "yardline_100", "yrdln", "desc", "play_type", "ydstogo", "touchback",
                       "kick_distance", "ep", "epa", "wp", "wpa", "punt_blocked", "punt_inside_twenty",
                       "punt_in_endzone","punt_out_of_bounds", "punt_downed", "punt_fair_catch",
                       "punt_attempt", "punter_player_id", "punter_player_name", "punt_returner_player_id",
                       "punt_returner_player_name", "return_yards", "season", "season_type", "week")
-  }
-
-  if(columns != "STANDARD") {
+  } else {
     punt_columns <- c(punt_columns, columns)
   }
 
