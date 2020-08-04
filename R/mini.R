@@ -56,8 +56,16 @@ create_miniY <- function(punts, threshold=32) {
                      #Punter_coach_epa = mean(epa - punt_epa),
                      returnpct = mean(returned),
                      #returnpctpd = mean(returned_pd, na.rm = TRUE),
-                     #returnpctof = mean(returned_of, na.rm = TRUE)
-                     #PEAR = mean(pear)
+                     #returnpctof = mean(returned_of, na.rm = TRUE),
+                     #PEAR = mean(pear),
+                     team_logo_espn = getmode_local(team_logo_espn),
+                     team_color = getmode_local(team_color),
+                     team_color2 = getmode_local(team_color2)
     )
   return(mini)
+}
+
+getmode_local <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
 }

@@ -16,7 +16,7 @@ trust_the_process <- function(punts) {
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
   punts <- punts %>% label_type()
-  #punts <- punts %>% puntr::add_logos()
+  punts <- punts %>% add_logos()
 
   return(punts)
 }
@@ -180,5 +180,14 @@ calculate_net <- function(punts) {
 # performance in those situations
 label_type <- function(punts, threshold=41) {
   punts <- punts %>% tibble::add_column(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
+  return(punts)
+}
+
+add_logos <- function(punts) {
+  if(!"team_logo_espn" %>% is.element(colnames(miniY))) {
+    logos <- nflfastR::teams_colors_logos %>%
+      select(team_abbr, team_logo_espn, team_color, team_color2)
+    punts <- punts %>% dplyr::left_join(logos, by = c("posteam" = "team_abbr"))
+  }
   return(punts)
 }
