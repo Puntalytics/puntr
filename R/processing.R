@@ -184,7 +184,7 @@ label_type <- function(punts, threshold=41) {
 }
 
 add_logos <- function(punts) {
-  if(!"team_logo_espn" %>% is.element(colnames(miniY))) {
+  if(!"team_logo_espn" %>% is.element(colnames(punts))) {
     logos <- nflfastR::teams_colors_logos %>%
       select(team_abbr, team_logo_espn, team_color, team_color2)
     punts <- punts %>% dplyr::left_join(logos, by = c("posteam" = "team_abbr"))

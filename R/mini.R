@@ -62,6 +62,10 @@ create_miniY <- function(punts, threshold=32) {
                      team_color = getmode_local(team_color),
                      team_color2 = getmode_local(team_color2)
     )
+
+  mini <- mini %>%
+    dplyr::mutate(seasonid = purrr::map2_chr(punter_player_name, season, glue::glue, .sep=" "))
+
   return(mini)
 }
 
