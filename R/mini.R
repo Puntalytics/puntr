@@ -3,6 +3,7 @@
 ###| Create a dataframe where each punter appears once
 ###|
 
+#' @export
 create_mini <- function(punts, threshold=64) {
 
     mini <- punts %>%
@@ -32,7 +33,7 @@ create_mini <- function(punts, threshold=64) {
     return(mini)
 }
 
-
+#' @export
 create_miniY <- function(punts, threshold=32) {
 
   mini <- punts %>%

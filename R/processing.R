@@ -7,8 +7,11 @@
 # Inputs and outputs a dataframe "punts"
 #
 # Read on for details about the functions individually, or don't!  This function will usually do the trick
-trust_the_process <- function(punts) {
-  punts <- punts %>% punt_trim()
+#' @export
+trust_the_process <- function(punts, trim=TRUE) {
+  if(trim) {
+    punts <- punts %>% punt_trim()
+  }
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
   punts <- punts %>% note_scores()
@@ -24,6 +27,7 @@ trust_the_process <- function(punts) {
 # Trim down to only the columns you're likely to need for puntalytics
 # If you'd like additional columns, include them as a second argument.
 # If you'd like to keep all columns, include the flag columns = "ALL"
+#' @export
 punt_trim <- function(punts, columns="STANDARD") {
 
   if(columns=="ALL"){

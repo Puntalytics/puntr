@@ -5,6 +5,7 @@
 
 # Calculate All
 # Inputs and outputs a dataframe "punts"
+#' @export
 calculate_all <- function(punts) {
 
   punts <- punts %>%
