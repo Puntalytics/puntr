@@ -24,8 +24,8 @@ create_mini <- function(punts, threshold=64) {
                        Punt_epa_avg = mean(punt_epa),
                        Punt_epa_tot = sum(punt_epa),
                        returnpct = mean(returned),
-                       returnpctpd = mean(returned_pd, na.rm = TRUE),
-                       returnpctof = mean(returned_of, na.rm = TRUE),
+                       #returnpctpd = mean(returned_pd, na.rm = TRUE),
+                       #returnpctof = mean(returned_of, na.rm = TRUE),
                        first_year = min(season),
                        last_year = max(season)
                        )
@@ -53,10 +53,10 @@ create_miniY <- function(punts, threshold=32) {
                      SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
                      Punt_epa_avg = mean(punt_epa),
                      Punt_epa_tot = sum(punt_epa),
-                     Punter_coach_epa = mean(epa - punt_epa),
+                     #Punter_coach_epa = mean(epa - punt_epa),
                      returnpct = mean(returned),
-                     returnpctpd = mean(returned_pd, na.rm = TRUE),
-                     returnpctof = mean(returned_of, na.rm = TRUE)
+                     #returnpctpd = mean(returned_pd, na.rm = TRUE),
+                     #returnpctof = mean(returned_of, na.rm = TRUE)
                      #PEAR = mean(pear)
     )
   return(mini)
