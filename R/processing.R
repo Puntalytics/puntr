@@ -11,14 +11,12 @@ trust_the_process <- function(punts) {
   punts <- punts %>% punt_trim()
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
-  #punts <- punts %>% remove_blocks()
-  # punts <- punts %>% add_season()
-  #punts <- punts %>% remove_scores()
+  punts <- punts %>% note_scores()
   punts <- punts %>% fix_touchbacks()
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
   punts <- punts %>% label_type()
-  #punts <- punts %>% add_logos()
+  punts <- punts %>% puntr::add_logos()
 
   return(punts)
 }
@@ -134,7 +132,7 @@ remove_scores <- function(punts) {
 # This function assigns those punts a value for kick_distance as if they had gone to the 20
 # If you'd like touchbacks to be treated as if they went elsewhere (say, the goalline, as is standard)
 # you can do so by setting correction=0
-# We recommend using this default value of correcton=20, representing the actual field-position
+# We recommend using this default value of correction=20, representing the actual field-position
 # result of a touchback
 fix_touchbacks <- function(punts, correction=20) {
 
