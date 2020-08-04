@@ -8,6 +8,7 @@
 #
 # Read on for details about the functions individually, or don't!  This function will usually do the trick
 trust_the_process <- function(punts) {
+  punts <- punts %>% punt_trim()
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
   #punts <- punts %>% remove_blocks()
@@ -17,10 +18,37 @@ trust_the_process <- function(punts) {
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
   punts <- punts %>% label_type()
-  punts <- punts %>% add_logos()
+  #punts <- punts %>% add_logos()
 
   return(punts)
 }
+
+# Trim down to only the columns you're likely to need for puntalytics
+# If you'd like additional columns, include them as a second argument.
+# If you'd like to keep all columns, include the flag columns = "ALL"
+punt_trim <- function(punts, columns="STANDARD") {
+
+  if(columns=="ALL"){
+    return(punts)
+
+  } else {
+    punt_columns <- c("play_id", "game_id", "home_team", "away_team", "posteam", "defteam", "game_date",
+                      "yardline_100", "yrdln", "desc", "play_type", "ydstogo", "touchback",
+                      "kick_distance", "ep", "epa", "wp", "wpa", "punt_blocked", "punt_inside_twenty",
+                      "punt_in_endzone","punt_out_of_bounds", "punt_downed", "punt_fair_catch",
+                      "punt_attempt", "punter_player_id", "punter_player_name", "punt_returner_player_id",
+                      "punt_returner_player_name", "return_yards", "season", "season_type", "week")
+  }
+
+  if(columns != "STANDARD") {
+    punt_columns <- c(punt_columns, columns)
+  }
+
+  punts <- punts %>% dplyr::select(punt_columns)
+
+  return(punts)
+}
+
 
 # Fix NA
 # Inputs and outputs a dataframe "punts"
