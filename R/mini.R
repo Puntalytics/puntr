@@ -13,33 +13,36 @@
 #' @export
 create_mini <- function(punts, threshold=64) {
 
-    mini <- punts %>%
-      dplyr::group_by(punter_player_name) %>%
-      dplyr::filter(n() > threshold) %>%
-      dplyr::summarize(NumPunts = n(),
-                       Gross = mean(GrossYards),
-                       Net = mean(NetYards),
-                       RERUN = mean(RERUN),
-                       SHARP = mean(SHARP),
-                       SHARP_OF = mean(SHARP_OF, na.rm = TRUE),
-                       SHARP_PD = mean(SHARP_PD, na.rm = TRUE),
-                       SHARPnet = mean(SHARPnet),
-                       SHARPnet_OF = mean(SHARPnet_OF, na.rm = TRUE),
-                       SHARPnet_PD = mean(SHARPnet_PD, na.rm = TRUE),
-                       SHARP_RERUN = mean(SHARP_RERUN),
-                       SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
-                       SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
-                       Punt_epa_avg = mean(punt_epa),
-                       Punt_epa_tot = sum(punt_epa),
-                       Punt_epaae_avg = mean(punt_epa_above_expected),
-                       Punt_epaae_tot = sum(punt_epa_above_expected),
-                       returnpct = mean(returned),
-                       #returnpctpd = mean(returned_pd, na.rm = TRUE),
-                       #returnpctof = mean(returned_of, na.rm = TRUE),
-                       first_year = min(season),
-                       last_year = max(season)
-                       )
-    return(mini)
+  mini <- punts %>%
+    dplyr::group_by(punter_player_name) %>%
+    dplyr::filter(n() > threshold) %>%
+    dplyr::summarize(NumPunts = n(),
+                     Gross = mean(GrossYards),
+                     Net = mean(NetYards),
+                     RERUN = mean(RERUN),
+                     SHARP = mean(SHARP),
+                     SHARP_OF = mean(SHARP_OF, na.rm = TRUE),
+                     SHARP_PD = mean(SHARP_PD, na.rm = TRUE),
+                     SHARPnet = mean(SHARPnet),
+                     SHARPnet_OF = mean(SHARPnet_OF, na.rm = TRUE),
+                     SHARPnet_PD = mean(SHARPnet_PD, na.rm = TRUE),
+                     SHARP_RERUN = mean(SHARP_RERUN),
+                     SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
+                     SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
+                     Punt_epa_avg = mean(punt_epa),
+                     Punt_epa_tot = sum(punt_epa),
+                     Punt_epaae_avg = mean(punt_epa_above_expected),
+                     Punt_epaae_tot = sum(punt_epa_above_expected),
+                     returnpct = mean(returned),
+                     #returnpctpd = mean(returned_pd, na.rm = TRUE),
+                     #returnpctof = mean(returned_of, na.rm = TRUE),
+                     first_year = min(season),
+                     last_year = max(season),
+                     team_logo_espn = getmode_local(team_logo_espn),
+                     team_color = getmode_local(team_color),
+                     team_color2 = getmode_local(team_color2)
+    )
+  return(mini)
 }
 
 #' Summarize data for player-seasons
