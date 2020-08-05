@@ -4,10 +4,12 @@
 \alias{trust_the_process}
 \title{Clean and process play-by-play punting data}
 \usage{
-trust_the_process(punts, trim = TRUE)
+trust_the_process(punts, seasontype = "REG", trim = TRUE)
 }
 \arguments{
 \item{punts}{The play-by-play punting data to be cleaned and processed}
+
+\item{seasontype}{One of "REG" (default), or "POST" to filter data, or NULL to include all data}
 
 \item{trim}{Specify \code{trim=FALSE} if you would like to use puntr::punt_trim to create custom columns}
 }
