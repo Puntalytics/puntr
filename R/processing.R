@@ -11,12 +11,17 @@
 #'
 #' @param punts The play-by-play punting data to be cleaned and processed
 #' @param trim Specify \code{trim=FALSE} if you would like to use puntr::punt_trim to create custom columns
+#' @param seasontype One of "REG" (default), or "POST" to filter data, or NULL to include all data
 #' @return A tibble \code{punts} with cleaned and processed play-by-play punting data
 #' @examples
 #' punts <- trust_the_process(punts)
 #' punts <- trust_the_process(punts_custom_trimmed_already, trim=FALSE)
 #' @export
-trust_the_process <- function(punts, trim=TRUE) {
+trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
+
+  if(!is.null(seasontype)) {
+    punts <- punts %>% dplyr::filter(season_type==seasontype)
+  }
   if(trim) {
     punts <- punts %>% punt_trim()
   }
