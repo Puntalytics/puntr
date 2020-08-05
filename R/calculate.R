@@ -118,6 +118,12 @@ calculate_punt_epa <- function(punts) {
     dplyr::mutate(ep_after = -ep_after) %>%
     dplyr::mutate(punt_epa = ep_after - ep_before)
 
+  epa_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, na.action = na.exclude)
+
+  punts <- punts %>%
+    dplyr::mutate(punt_expected_epa = predict(epa_model)) %>%
+    dplyr::mutate(punt_epa_above_expected = punt_epa - punt_expected_epa)
+
   return(punts)
 }
 
@@ -137,7 +143,7 @@ calculate_punt_epa <- function(punts) {
 #     dplyr::mutate(ep_after = -ep_after) %>%
 #     dplyr::mutate(punt_epa = ep_after - ep_before)
 #
-#   #pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, span=0.8, na.action = na.exclude)
+#   #pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, na.action = na.exclude)
 #
 #   # punts <- punts %>%
 #   #   dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
