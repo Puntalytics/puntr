@@ -51,7 +51,7 @@ import_one_season <- function(year, url) {
 #' @export
 import_metadata <- function() {
   metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/game_meta_data_ready_to_merge.csv') %>%
-    readr::read_rds()
+    readr::read_csv()
   return(metadata)
 }
 
