@@ -4,7 +4,7 @@
 \alias{create_mini}
 \title{Summarize data for players}
 \usage{
-create_mini(punts, parameter = NA, threshold = 32)
+create_mini(punts, threshold = 64)
 }
 \arguments{
 \item{punts}{The play-by-play punting data to be summarized}
