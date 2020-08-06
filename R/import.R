@@ -48,7 +48,7 @@ import_one_season <- function(year, url) {
 #' @param punts A tibble containing the punts to which metadata will be added
 #' @return A tibble \code{punts} with metadata added
 #' @examples
-#' punts_with_metadata <- punts %>% add_metadata()
+#' punts_with_metadata <- add_metadata(punts)
 #' @export
 add_metadata <- function(punts) {
   metadata <- import_metadata()
