@@ -42,9 +42,24 @@ import_one_season <- function(year, url) {
   return(pbp)
 }
 
-# Here's the associated metadata that you might want (see the associated scraping in the pfr_metadata_pull repo)
+#' Add metadata to punts
+#'
+#' This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
+#' @param punts A tibble containing the punts to which metadata will be added
+#' @return A tibble \code{punts} with metadata added
+#' @examples
+#' punts_with_metadata <- punts %>% add_metadata()
+#' @export
+add_metadata <- function(punts) {
+  metadata <- import_metadata()
+  punts <- left_join(punts, metadata, by = c("season", "week", "home_team", "away_team"))
+  return(punts)
+}
+
 #' Import metadata
 #'
+#' This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)
+#' The pfr_metadata_pull package contains code for scraping the metadata yourself, if you're so inclined
 #' @return A tibble \code{metadata} containing metadata
 #' @examples
 #' metadata <- import_metadata()
@@ -54,4 +69,6 @@ import_metadata <- function() {
     readr::read_csv()
   return(metadata)
 }
+
+
 

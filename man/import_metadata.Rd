@@ -10,7 +10,8 @@ import_metadata()
 A tibble \code{metadata} containing metadata
 }
 \description{
-Import metadata
+This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)
+The pfr_metadata_pull package contains code for scraping the metadata yourself, if you're so inclined
 }
 \examples{
 metadata <- import_metadata()
