@@ -118,11 +118,29 @@ calculate_punt_epa <- function(punts) {
     dplyr::mutate(ep_after = -ep_after) %>%
     dplyr::mutate(punt_epa = ep_after - ep_before)
 
-  epa_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, na.action = na.exclude)
+  epa_model <- function(input) {
+    loess(formula = punt_epa ~ YardsFromOwnEndZone, data = input, na.action = na.exclude)
+  }
 
   punts <- punts %>%
-    dplyr::mutate(punt_expected_epa = predict(epa_model)) %>%
+    dplyr::mutate(punt_expected_epa = predict(epa_model(punts))) %>%
     dplyr::mutate(punt_epa_above_expected = punt_epa - punt_expected_epa)
+
+  punts <- punts %>%
+    dplyr::group_by(season) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(model = purrr::map(data, epa_model)) %>%
+    dplyr::mutate(ea_punt_expected_epa = purrr::map(model, predict))
+
+  punts <- punts %>%
+    tidyr::unnest(c(data, ea_punt_expected_epa)) %>%
+    subset(select = -c(model))
+
+  punts <- punts %>%
+    dplyr::mutate(ea_punt_epa_above_expected = punt_epa - ea_punt_expected_epa)
+
+  punts <- punts %>%
+    dplyr::ungroup()
 
   return(punts)
 }
