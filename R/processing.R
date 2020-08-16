@@ -130,7 +130,7 @@ calculate_net <- function(punts) {
 # Note that none of our actual metrics depend on this threshold; it's just a way to categorize situations and
 # performance in those situations
 label_type <- function(punts, threshold=41) {
-  punts <- punts %>% dplyr::mutate(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
+  punts <- punts %>% dplyr::mutate(PD = dplyr::if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
   return(punts)
 }
 
@@ -149,7 +149,7 @@ add_YFOEZ <- function(punts) {
 add_logos <- function(punts) {
   if(!"team_logo_espn" %>% is.element(colnames(punts))) {
     logos <- nflfastR::teams_colors_logos %>%
-      select(team_abbr, team_logo_espn, team_color, team_color2)
+      dplyr::select(team_abbr, team_logo_espn, team_color, team_color2)
     punts <- punts %>% dplyr::left_join(logos, by = c("posteam" = "team_abbr"))
   }
   return(punts)
