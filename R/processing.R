@@ -109,8 +109,7 @@ fix_na <- function(punts) {
 # result of a touchback
 fix_touchbacks <- function(punts, correction=20) {
 
-  punts <- punts %>% dplyr::mutate(tb = if_else(str_detect(punts$desc, 'Touchback'), 1, 0))
-  punts$GrossYards[punts$tb==1] <- punts$yardline_100[punts$tb==1] - correction
+  punts$GrossYards[punts$touchback==1] <- punts$yardline_100[punts$touchback==1] - correction
 
   return(punts)
 }
