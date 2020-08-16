@@ -4,12 +4,12 @@
 \alias{punt_trim}
 \title{Filter columns relevant to punting}
 \usage{
-punt_trim(punts, columns = "STANDARD")
+punt_trim(punts, columns = NULL)
 }
 \arguments{
 \item{punts}{The play-by-play punting data}
 
-\item{columns}{Defaults to \code{"STANDARD"} indicating trimming down to the default columns.  If \code{columns} is a list of other columns, those will additionally included}
+\item{columns}{Defaults to \code{NULL} indicating trimming down to the default columns. If \code{columns} is a list of other columns, those will be additionally included}
 }
 \value{
 A tibble \code{punts} containing only the specified columns
@@ -18,5 +18,6 @@ A tibble \code{punts} containing only the specified columns
 Filter columns relevant to punting
 }
 \examples{
+punts <- punt_trim(punts)
 punts <- punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
 }

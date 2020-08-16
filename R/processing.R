@@ -10,8 +10,8 @@
 #' Clean and process play-by-play punting data
 #'
 #' @param punts The play-by-play punting data to be cleaned and processed
-#' @param trim Specify \code{trim=FALSE} if you would like to use puntr::punt_trim to create custom columns
-#' @param seasontype One of "REG" (default), or "POST" to filter data, or NULL to include all data
+#' @param trim Specify \code{trim=FALSE} if you would like to use \code{puntr::punt_trim} to create custom columns (or not use \code{puntr::punt_trim} at all and include all columns)
+#' @param seasontype One of "REG" (default) or "POST" to filter data, or NULL to include all data
 #' @return A tibble \code{punts} with cleaned and processed play-by-play punting data
 #' @examples
 #' punts <- trust_the_process(punts)
@@ -27,7 +27,6 @@ trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
   }
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
-  punts <- punts %>% note_scores()
   punts <- punts %>% fix_touchbacks()
   punts <- punts %>% calculate_net()
   punts <- punts %>% add_YFOEZ()
@@ -43,21 +42,23 @@ trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
 #' Filter columns relevant to punting
 #'
 #' @param punts The play-by-play punting data
-#' @param columns Defaults to \code{"STANDARD"} indicating trimming down to the default columns.  If \code{columns} is a list of other columns, those will additionally included
+#' @param columns Defaults to \code{NULL} indicating trimming down to the default columns. If \code{columns} is a list of other columns, those will be additionally included
 #' @return A tibble \code{punts} containing only the specified columns
 #' @examples
+#' punts <- punt_trim(punts)
 #' punts <- punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
 #' @export
-punt_trim <- function(punts, columns="STANDARD") {
+punt_trim <- function(punts, columns=NULL) {
 
-  if(columns=="STANDARD") {
-    punt_columns <- c("play_id", "game_id", "home_team", "away_team", "posteam", "defteam", "game_date",
+  punt_columns <- c("play_id", "game_id", "home_team", "away_team", "posteam", "defteam", "game_date",
                       "yardline_100", "yrdln", "desc", "play_type", "ydstogo", "touchback",
                       "kick_distance", "ep", "epa", "wp", "wpa", "punt_blocked", "punt_inside_twenty",
                       "punt_in_endzone","punt_out_of_bounds", "punt_downed", "punt_fair_catch",
                       "punt_attempt", "punter_player_id", "punter_player_name", "punt_returner_player_id",
-                      "punt_returner_player_name", "return_yards", "season", "season_type", "week")
-  } else {
+                      "punt_returner_player_name", "return_yards", "season", "season_type", "week",
+                      "touchdown", "td_team")
+
+  if(!is.null(columns))  {
     punt_columns <- c(punt_columns, columns)
   }
 
@@ -66,6 +67,14 @@ punt_trim <- function(punts, columns="STANDARD") {
   return(punts)
 }
 
+# Add GrossYards to data frame
+# Inputs and outputs a dataframe "punts"
+#
+# Rename the ugly kick_distance to GrossYards so it looks nice as an axis label
+add_GrossYards <- function(punts) {
+  punts <- punts %>% dplyr::rename(GrossYards = kick_distance)
+  return(punts)
+}
 
 # Fix NA
 # Inputs and outputs a dataframe "punts"
@@ -89,61 +98,6 @@ fix_na <- function(punts) {
   return(punts)
 }
 
-# Add Season
-# Inputs and outputs a dataframe "punts"
-#
-# Data frame comes pre-loaded with a date for each game, in the form of "game_date", not used here,
-# and in the form of game_id = YYYYMMDDII, where "II" is a two-digit identifier for the particular
-# game. This function extracts and adds to the data frame the season in which each punt occurred.
-# This also accounts for January/February games in different calendar years than the rest of the season
-# add_season <- function(punts) {
-#
-#   punts <- punts %>% add_column(Year=NA_integer_)
-#
-#   # jan is true if game is in january, else false
-#   jan <- floor(((punts$game_id - ((floor(punts$game_id/1000000))*1000000))/10000)) == 1
-#
-#   # likewise for Febuary
-#   feb <- floor(((punts$game_id - ((floor(punts$game_id/1000000))*1000000))/10000)) == 2
-#
-#   punts$Year[!jan & !feb] <- floor(punts$game_id[!jan & !feb] / 1000000)
-#   punts$Year[jan | feb] <- floor(punts$game_id[jan | feb] / 1000000 - 1)
-#
-#   return(punts)
-# }
-
-# Remove blocked punts
-# Inputs and outputs a dataframe "punts"
-remove_blocks <- function(punts) {
-  punts <- punts %>% dplyr::filter(punt_blocked==0)
-  return(punts)
-}
-
-# Note scoring plays and muffs, but *don't* remove them.  *NOT* wrapped into TrustTheProcess
-# Inputs and outputs a dataframe "punts"
-note_scores <- function(punts) {
-  # All TDs
-  punts <- punts %>% tibble::add_column(TDany = dplyr::if_else(stringr::str_detect(punts$desc, 'TOUCHDOWN'), 1, 0))
-  # muffs
-  punts <- punts %>% tibble::add_column(punt_fumble = dplyr::if_else(stringr::str_detect(punts$desc, 'RECOVERED'), 1, 0))
-  # TD returns
-  punts <- punts %>%
-    add_column(TDreturn = dplyr::if_else(punts$TDany==1 & punts$punt_fumble==0 & !stringr::str_detect(punts$desc, 'NULLIFIED'),
-                                  1, 0))
-
-  return(punts)
-}
-
-# Remove scoring plays and muffs
-# Inputs and outputs a dataframe "punts"
-remove_scores <- function(punts) {
-
-  punts <- punts %>% note_scores()  # note scores but don't remove them yet
-  punts <- punts %>% dplyr::filter(punt_fumble==0 & TDany==0) # remove scores
-
-  return(punts)
-}
-
 # Fix NA value for touchback kick distance
 # Inputs and outputs a dataframe "punts"
 #
@@ -155,37 +109,16 @@ remove_scores <- function(punts) {
 # result of a touchback
 fix_touchbacks <- function(punts, correction=20) {
 
-   punts <- punts %>% tibble::add_column(tb = if_else(str_detect(punts$desc, 'Touchback'), 1, 0))
-   punts$GrossYards[punts$tb==1] <- punts$yardline_100[punts$tb==1] - correction
+  punts <- punts %>% dplyr::mutate(tb = if_else(str_detect(punts$desc, 'Touchback'), 1, 0))
+  punts$GrossYards[punts$tb==1] <- punts$yardline_100[punts$tb==1] - correction
 
-   return(punts)
- }
-
-# Add YardsFromOwnEndZone to data frame
-# Inputs and outputs a dataframe "punts"
-#
-# Useful such that on a graph with YFOEZ as the x-axis, the offensive team goes "left-to-right"
-# Note - this function can be used on a dataframe that contains plays other than punts
-add_YFOEZ <- function(punts) {
-
-  punts <- punts %>% tibble::add_column(YardsFromOwnEndZone = 100 - punts$yardline_100)
-
-  return(punts)
-}
-
-# Add GrossYards to data frame
-# Inputs and outputs a dataframe "punts"
-#
-# Rename the ugly kick_distance to GrossYards so it looks nice as an axis label
-add_GrossYards <- function(punts) {
-  punts <- punts %>% dplyr::rename(GrossYards = kick_distance)
   return(punts)
 }
 
 # Calculate normal net, which annoyingly isn't in the dataframe to begin with
 # Inputs and outputs a dataframe "punts"
 calculate_net <- function(punts) {
-  punts <- punts %>% tibble::add_column(NetYards = punts$GrossYards - punts$return_yards)
+  punts <- punts %>% dplyr::mutate(NetYards = punts$GrossYards - punts$return_yards)
   return(punts)
 }
 
@@ -198,7 +131,19 @@ calculate_net <- function(punts) {
 # Note that none of our actual metrics depend on this threshold; it's just a way to categorize situations and
 # performance in those situations
 label_type <- function(punts, threshold=41) {
-  punts <- punts %>% tibble::add_column(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
+  punts <- punts %>% dplyr::mutate(PD = if_else(punts$YardsFromOwnEndZone>=threshold, 1, 0))
+  return(punts)
+}
+
+# Add YardsFromOwnEndZone to data frame
+# Inputs and outputs a dataframe "punts"
+#
+# Useful such that on a graph with YFOEZ as the x-axis, the offensive team goes "left-to-right"
+# Note - this function can be used on a dataframe that contains plays other than punts
+add_YFOEZ <- function(punts) {
+
+  punts <- punts %>% dplyr::mutate(YardsFromOwnEndZone = 100 - punts$yardline_100)
+
   return(punts)
 }
 
@@ -210,3 +155,18 @@ add_logos <- function(punts) {
   }
   return(punts)
 }
+
+# # Note scoring plays and muffs, but *don't* remove them.
+# # Inputs and outputs a dataframe "punts"
+# note_scores <- function(punts) {
+#   # All TDs
+#   punts <- punts %>% tibble::add_column(TDany = dplyr::if_else(stringr::str_detect(punts$desc, 'TOUCHDOWN'), 1, 0))
+#   # muffs
+#   punts <- punts %>% tibble::add_column(punt_fumble = dplyr::if_else(stringr::str_detect(punts$desc, 'RECOVERED'), 1, 0))
+#   # TD returns
+#   punts <- punts %>%
+#     tibble::add_column(TDreturn = dplyr::if_else(punts$TDany==1 & punts$punt_fumble==0 & !stringr::str_detect(punts$desc, 'NULLIFIED'),
+#                                   1, 0))
+#
+#   return(punts)
+# }

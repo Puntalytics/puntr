@@ -7,7 +7,7 @@
 import_metadata()
 }
 \value{
-A tibble \code{metadata} containing metadata
+A tibble \code{metadata} containing metadata. Each row is a game.
 }
 \description{
 This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)

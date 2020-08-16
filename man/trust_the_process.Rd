@@ -9,9 +9,9 @@ trust_the_process(punts, seasontype = "REG", trim = TRUE)
 \arguments{
 \item{punts}{The play-by-play punting data to be cleaned and processed}
 
-\item{seasontype}{One of "REG" (default), or "POST" to filter data, or NULL to include all data}
+\item{seasontype}{One of "REG" (default) or "POST" to filter data, or NULL to include all data}
 
-\item{trim}{Specify \code{trim=FALSE} if you would like to use puntr::punt_trim to create custom columns}
+\item{trim}{Specify \code{trim=FALSE} if you would like to use \code{puntr::punt_trim} to create custom columns (or not use \code{puntr::punt_trim} at all and include all columns)}
 }
 \value{
 A tibble \code{punts} with cleaned and processed play-by-play punting data

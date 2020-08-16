@@ -22,7 +22,7 @@ import_punts <- function(years) {
 # Call this function with a range of years, e.g. import_seasons(1999:2019)
 # Data goes back to 1999, and should be updated week-by-week during whatever the current season is
 #' Import play-by-play data
-#'
+#' Grab all play-by-play data, not just punts
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{pbp} containing play-by-play data for the specified years
 #' @examples
@@ -60,7 +60,7 @@ add_metadata <- function(punts) {
 #'
 #' This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)
 #' The pfr_metadata_pull package contains code for scraping the metadata yourself, if you're so inclined
-#' @return A tibble \code{metadata} containing metadata
+#' @return A tibble \code{metadata} containing metadata. Each row is a game.
 #' @examples
 #' metadata <- import_metadata()
 #' @export
@@ -69,6 +69,4 @@ import_metadata <- function() {
     readr::read_csv()
   return(metadata)
 }
-
-
 

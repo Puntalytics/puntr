@@ -1,11 +1,11 @@
 Package: puntr
 Type: Package
 Title: Analysis of Punting
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: person("Dennis", "Brookner", email = "debrookner@gmail.com",
   role = c("aut", "cre"))
 Description: A package for importing, manipulating, analyzing, and visualizing data
-    related to football punting.  Uses play-by-play dataframes in the format used
+    related to football punting. Uses play-by-play dataframes in the format used
     by nflscrapR and nflfastR.
 License: What license is it under?
 Encoding: UTF-8

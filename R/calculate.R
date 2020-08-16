@@ -99,7 +99,7 @@ calculate_rerun <- function(punts) {
   return(punts)
 }
 
-# calculate PEAR - Punter points Expected Above Replacement
+# calculate EAEPAAE/P - Era-adjusted EPA above expected / punt
 
 calculate_punt_epa <- function(punts) {
 
@@ -144,31 +144,3 @@ calculate_punt_epa <- function(punts) {
 
   return(punts)
 }
-
-# calculate_pear_first <- function(punts) {
-#
-#   ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/first_down_ep_reference.csv') %>%
-#     readr::read_csv(col_types = 'id')
-#   ep_ref_after<- ep_ref %>%
-#     dplyr::rename(YardLineAfter_For_Opponent = YardsFromOwnEndZone)
-#
-#   punts <- punts %>%
-#     dplyr::left_join(ep_ref) %>%
-#     dplyr::rename(ep_before = first_down_ep) %>%
-#     dplyr::mutate(YardLineAfter_For_Opponent = 100 - round((YardsFromOwnEndZone + RERUN))) %>%
-#     dplyr::left_join(ep_ref_after) %>%
-#     dplyr::rename(ep_after = first_down_ep) %>%
-#     dplyr::mutate(ep_after = -ep_after) %>%
-#     dplyr::mutate(punt_epa = ep_after - ep_before)
-#
-#   #pear_model <- loess(formula = punt_epa ~ YardsFromOwnEndZone, data = punts, na.action = na.exclude)
-#
-#   # punts <- punts %>%
-#   #   dplyr::mutate(punt_expected_epa = predict(pear_model)) %>%
-#   #   dplyr::mutate(punt_epa_above_average = punt_epa - punt_expected_epa)
-#
-#   # punts <- punts %>%
-#   #   dplyr::mutate(pear = punt_epa_above_average + 0.2) # A logical but arbitrary adjustment from average to replacement
-#
-#   return(punts)
-# }

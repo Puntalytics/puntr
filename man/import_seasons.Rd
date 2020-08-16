@@ -2,7 +2,8 @@
 % Please edit documentation in R/import.R
 \name{import_seasons}
 \alias{import_seasons}
-\title{Import play-by-play data}
+\title{Import play-by-play data
+Grab all play-by-play data, not just punts}
 \usage{
 import_seasons(years)
 }
@@ -14,6 +15,7 @@ A tibble \code{pbp} containing play-by-play data for the specified years
 }
 \description{
 Import play-by-play data
+Grab all play-by-play data, not just punts
 }
 \examples{
 pbp <- import_seasons(1999:2019)
