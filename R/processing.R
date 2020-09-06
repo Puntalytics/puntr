@@ -62,7 +62,7 @@ punt_trim <- function(punts, columns=NULL) {
     punt_columns <- c(punt_columns, columns)
   }
 
-  punts <- punts %>% dplyr::select(punt_columns)
+  punts <- punts %>% dplyr::select(all_of(punt_columns))
 
   return(punts)
 }

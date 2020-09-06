@@ -24,6 +24,46 @@ calculate_all <- function(punts) {
   return(punts)
 }
 
+# calculate RERUN - Return-Edited Real Unbiased Net
+# Inputs and outputs a dataframe "punts"
+calculate_rerun <- function(punts) {
+
+  rerun_model <- function(input) {
+    loess(formula = return_yards_r ~ kick_distance_r, data = input, span=0.65, na.action = na.exclude)
+  }
+
+  # new column with actual returns
+  # column is NA for punts that aren't returned; those will be omitted from the regression
+  punts <- punts %>%
+    dplyr::mutate(returned = purrr::pmap_dbl(list(punt_out_of_bounds==0 &
+                                                    punt_downed==0 &
+                                                    punt_fair_catch==0 &
+                                                    touchback==0, 1, 0), dplyr::if_else)) %>%
+    dplyr::mutate(return_yards_r = purrr::pmap_dbl(list(returned==1, return_yards, NA_real_), dplyr::if_else)) %>%
+    dplyr::mutate(kick_distance_r = purrr::pmap_dbl(list(returned==1, GrossYards, NA_real_), dplyr::if_else))
+
+
+  punts <- punts %>%
+    dplyr::group_by(season) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(r_model = purrr::map(data, rerun_model)) %>%
+    dplyr::mutate(return_smooth = purrr::map(r_model, predict)) %>%
+    tidyr::unnest(c(data, return_smooth)) %>%
+    subset(select = -c(r_model)) %>%
+    dplyr::mutate(RERUN = purrr::pmap_dbl(list(returned==1,
+                                               kick_distance_r - return_smooth, GrossYards),
+                                          dplyr::if_else)) %>%
+    ungroup()
+
+  # dplyr::mutate(return_smooth = loess(formula = return_yards_r ~ kick_distance_r,
+  #                                     data = punts,
+  #                                     span=.65,
+  #                                     na.action = na.exclude) %>% predict) %>%
+  # dplyr::mutate(RERUN = purrr::pmap_dbl(list(returned==1, kick_distance_r - return_smooth, GrossYards), dplyr::if_else))
+
+  return(punts)
+}
+
 # Calculate SHARP - Scrimmage Help/Hurt Adjusted Real Punting
 # Inputs and outputs a dataframe "punts"
 
@@ -73,47 +113,21 @@ calculate_sharp <- function(punts) {
   return(punts)
 }
 
-# calculate RERUN - Return-Edited Real Unbiased Net
-# Inputs and outputs a dataframe "punts"
-calculate_rerun <- function(punts) {
-
-  rerun_model <- function(input) {
-    loess(formula = return_yards_r ~ kick_distance_r, data = input, span=0.65, na.action = na.exclude)
-  }
-
-  # new column with actual returns
-  # column is NA for punts that aren't returned; those will be omitted from the regression
-  punts <- punts %>%
-    dplyr::mutate(returned = purrr::pmap_dbl(list(punt_out_of_bounds==0 &
-                                                    punt_downed==0 &
-                                                    punt_fair_catch==0 &
-                                                    touchback==0, 1, 0), dplyr::if_else)) %>%
-    dplyr::mutate(return_yards_r = purrr::pmap_dbl(list(returned==1, return_yards, NA_real_), dplyr::if_else)) %>%
-    dplyr::mutate(kick_distance_r = purrr::pmap_dbl(list(returned==1, GrossYards, NA_real_), dplyr::if_else)) %>%
-    dplyr::mutate(return_smooth = loess(formula = return_yards_r ~ kick_distance_r,
-                                        data = punts,
-                                        span=.65,
-                                        na.action = na.exclude) %>% predict) %>%
-    dplyr::mutate(RERUN = purrr::pmap_dbl(list(returned==1, kick_distance_r - return_smooth, GrossYards), dplyr::if_else))
-
-  return(punts)
-}
-
 # calculate EAEPAAE/P - Era-adjusted EPA above expected / punt
 
 calculate_punt_epa <- function(punts) {
 
-  ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/fourth_down_ep_reference.csv') %>%
+  ep_ref <- url('https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/fourth_down_ep_reference.csv') %>%
     readr::read_csv(col_types = 'id')
-  ep_ref_after <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/first_down_ep_reference.csv') %>%
+  ep_ref_after <- url('https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/first_down_ep_reference.csv') %>%
     readr::read_csv(col_types = 'id') %>%
     dplyr::rename(YardLineAfter_For_Opponent = YardsFromOwnEndZone)
 
   punts <- punts %>%
-    dplyr::left_join(ep_ref) %>%
+    dplyr::left_join(ep_ref, by = "YardsFromOwnEndZone") %>%
     dplyr::rename(ep_before = fourth_down_ep) %>%
     dplyr::mutate(YardLineAfter_For_Opponent = 100 - round((YardsFromOwnEndZone + RERUN))) %>%
-    dplyr::left_join(ep_ref_after) %>%
+    dplyr::left_join(ep_ref_after, by = "YardLineAfter_For_Opponent") %>%
     dplyr::rename(ep_after = first_down_ep) %>%
     dplyr::mutate(ep_after = -ep_after) %>%
     dplyr::mutate(punt_epa = ep_after - ep_before)
