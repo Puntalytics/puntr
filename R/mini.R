@@ -15,8 +15,8 @@ create_mini <- function(punts, threshold=64) {
 
   mini <- punts %>%
     dplyr::group_by(punter_player_name) %>%
-    dplyr::filter(n() > threshold) %>%
-    dplyr::summarize(NumPunts = n(),
+    dplyr::filter(dplyr::n() > threshold) %>%
+    dplyr::summarize(NumPunts = dplyr::n(),
                      Gross = mean(GrossYards),
                      Net = mean(NetYards),
                      RERUN = mean(RERUN),
@@ -57,8 +57,8 @@ create_miniY <- function(punts, threshold=32) {
 
   mini <- punts %>%
     dplyr::group_by(punter_player_name, season) %>%
-    dplyr::filter(n() > threshold) %>%
-    dplyr::summarize(NumPunts = n(),
+    dplyr::filter(dplyr::n() > threshold) %>%
+    dplyr::summarize(NumPunts = dplyr::n(),
                      Gross = mean(GrossYards),
                      Net = mean(NetYards),
                      RERUN = mean(RERUN),
