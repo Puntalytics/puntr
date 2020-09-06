@@ -14,7 +14,7 @@
 #' @export
 import_punts <- function(years) {
   punts <- years %>%
-    purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/Puntalytics/puntr/master/data/punts_')
+    purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/punts_')
   return(punts)
 }
 
@@ -65,7 +65,7 @@ add_metadata <- function(punts) {
 #' metadata <- import_metadata()
 #' @export
 import_metadata <- function() {
-  metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr/master/data/game_meta_data_ready_to_merge.csv') %>%
+  metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/game_meta_data_ready_to_merge.csv') %>%
     readr::read_csv()
   return(metadata)
 }
