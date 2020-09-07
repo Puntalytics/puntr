@@ -56,7 +56,7 @@ punt_trim <- function(punts, columns=NULL) {
                       "punt_in_endzone","punt_out_of_bounds", "punt_downed", "punt_fair_catch",
                       "punt_attempt", "punter_player_id", "punter_player_name", "punt_returner_player_id",
                       "punt_returner_player_name", "return_yards", "season", "season_type", "week",
-                      "touchdown", "td_team")
+                      "touchdown", "td_team", "temp", "roof")
 
   if(!is.null(columns))  {
     punt_columns <- c(punt_columns, columns)
