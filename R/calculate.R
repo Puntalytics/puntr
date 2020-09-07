@@ -53,7 +53,7 @@ calculate_rerun <- function(punts) {
     dplyr::mutate(RERUN = purrr::pmap_dbl(list(returned==1,
                                                kick_distance_r - return_smooth, GrossYards),
                                           dplyr::if_else)) %>%
-    ungroup()
+    dplyr::ungroup()
 
   # dplyr::mutate(return_smooth = loess(formula = return_yards_r ~ kick_distance_r,
   #                                     data = punts,
