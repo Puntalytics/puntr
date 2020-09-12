@@ -10,8 +10,9 @@
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{punts} containing play-by-play punting data for the specified years
 #' @examples
-#' \donttest
+#' \dontrun{
 #' import_punts(1999:2019)
+#' }
 #' @export
 import_punts <- function(years) {
   punts <- years %>%

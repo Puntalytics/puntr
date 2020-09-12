@@ -16,6 +16,7 @@ A tibble \code{punts} containing play-by-play punting data for the specified yea
 Import punting data
 }
 \examples{
-\donttest
+\dontrun{
 import_punts(1999:2019)
+}
 }
