@@ -16,6 +16,7 @@ A tibble \code{punts} with the calculated metrics added
 Calculate metrics
 }
 \examples{
-\donttest
+\dontrun{
 calculate_all(punts)
+}
 }

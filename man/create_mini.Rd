@@ -18,6 +18,7 @@ A tibble \code{mini} where each row is a punter and each column is a stat
 Summarize data for players
 }
 \examples{
-\donttest
+\dontrun{
 create_mini(punts)
+}
 }

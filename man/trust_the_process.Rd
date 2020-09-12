@@ -20,7 +20,8 @@ A tibble \code{punts} with cleaned and processed play-by-play punting data
 Clean and process play-by-play punting data
 }
 \examples{
-\donttest
+\dontrun{
 trust_the_process(punts)
 trust_the_process(punts_custom_trimmed_already, trim=FALSE)
+}
 }

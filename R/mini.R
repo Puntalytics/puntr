@@ -9,8 +9,9 @@
 #' @param threshold The minimum number of career punts needed to be included, defaults to 64
 #' @return A tibble \code{mini} where each row is a punter and each column is a stat
 #' @examples
-#' \donttest
+#' \dontrun{
 #' create_mini(punts)
+#' }
 #' @export
 create_mini <- function(punts, threshold=64) {
 
@@ -52,8 +53,9 @@ create_mini <- function(punts, threshold=64) {
 #' @param threshold The minimum number of punts for a season to be included, defaults to 32
 #' @return A tibble \code{miniY} where each row is a punter-season and each column is a stat
 #' @examples
-#' \donttest
+#' \dontrun{
 #' create_miniY(punts)
+#' }
 #' @export
 create_miniY <- function(punts, threshold=32) {
 

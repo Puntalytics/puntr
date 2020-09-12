@@ -14,9 +14,10 @@
 #' @param seasontype One of "REG" (default) or "POST" to filter data, or NULL to include all data
 #' @return A tibble \code{punts} with cleaned and processed play-by-play punting data
 #' @examples
-#' \donttest
+#' \dontrun{
 #' trust_the_process(punts)
 #' trust_the_process(punts_custom_trimmed_already, trim=FALSE)
+#' }
 #' @export
 trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
 
@@ -46,8 +47,10 @@ trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
 #' @param columns Defaults to \code{NULL} indicating trimming down to the default columns. If \code{columns} is a list of other columns, those will be additionally included
 #' @return A tibble \code{punts} containing only the specified columns
 #' @examples
-#' punts <- punt_trim(punts)
-#' punts <- punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
+#' \dontrun{
+#' punt_trim(punts)
+#' punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
+#' }
 #' @export
 punt_trim <- function(punts, columns=NULL) {
 

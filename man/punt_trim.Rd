@@ -18,6 +18,8 @@ A tibble \code{punts} containing only the specified columns
 Filter columns relevant to punting
 }
 \examples{
-punts <- punt_trim(punts)
-punts <- punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
+\dontrun{
+punt_trim(punts)
+punt_trim(punts, columns=c("solo_tackle", "assist_tackle"))
+}
 }

@@ -18,6 +18,7 @@ A tibble \code{miniY} where each row is a punter-season and each column is a sta
 Summarize data for player-seasons
 }
 \examples{
-\donttest
+\dontrun{
 create_miniY(punts)
+}
 }
