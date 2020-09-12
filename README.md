@@ -1,4 +1,6 @@
-# puntr, an R package for puntalytics
+# puntr
+
+Welcome to the documentation for `puntr`, an R package for puntalytics
 
 Install via:
 ```R
