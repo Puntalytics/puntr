@@ -1,11 +1,27 @@
-# puntr
-All your favorite Puntalytics code, now in package form.  
-  
-You can install via:
+# puntr, an R package for puntalytics
+
+Install via:
 ```R
 devtools::install_github("Puntalytics/puntr")
 ```
-  
-If you're used to using [nflfastR](https://github.com/mrcaseb/nflfastR), the data format should look familiar; if not, be sure to check it out.  Big thanks to them and their predecessors at nflscrapR for all of their hard work compiling these datasets.  
-  
-In lieu of real documentation, there's some additonal information about the package on our [website](https://puntalytics.github.io/puntr_package.html)
+Once that's installed, you can do
+```R
+library(puntr)
+
+punts_raw <- import_punts(1999:2019)
+punts_cleaned <- trust_the_process(punts_raw)
+punts <- calculate_all(punts_cleaned)
+```
+To get a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).  
+To compare punters, continue with
+```R
+mini <- create_mini(punts)
+```
+to get a data frame where each row is a punter, and each column is an average stat for that punter.  
+To compare punter **seasons**, instead use
+```R
+miniY <- create_miniY(punts)
+```
+which gives every unique punter season a row.  
+
+If you're just looking for the data directly, you can find .rds files of all punts from each season 1999-2019 [here](https://github.com/Puntalytics/puntr-data/tree/master/data)
