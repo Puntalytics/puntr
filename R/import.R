@@ -46,33 +46,33 @@ import_one_season <- function(year, url) {
   return(pbp)
 }
 
-#' Add metadata to punts
-#'
-#' This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
-#' @param punts A tibble containing the punts to which metadata will be added
-#' @return A tibble \code{punts} with metadata added
-#' @examples
-#' \dontrun{
-#' add_metadata(punts)
+#' #' Add metadata to punts
+#' #'
+#' #' This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
+#' #' @param punts A tibble containing the punts to which metadata will be added
+#' #' @return A tibble \code{punts} with metadata added
+#' #' @examples
+#' #' \dontrun{
+#' #' add_metadata(punts)
+#' #' }
+#' #' @export
+#' add_metadata <- function(punts) {
+#'   metadata <- import_metadata()
+#'   punts <- left_join(punts, metadata, by = c("season", "week", "home_team", "away_team"))
+#'   return(punts)
 #' }
-#' @export
-add_metadata <- function(punts) {
-  metadata <- import_metadata()
-  punts <- left_join(punts, metadata, by = c("season", "week", "home_team", "away_team"))
-  return(punts)
-}
-
-#' Import metadata
 #'
-#' This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)
-#' The pfr_metadata_pull package contains code for scraping the metadata yourself, if you're so inclined
-#' @return A tibble \code{metadata} containing metadata. Each row is a game.
-#' @examples
-#' metadata <- import_metadata()
-#' @export
-import_metadata <- function() {
-  metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/game_meta_data_ready_to_merge.csv') %>%
-    readr::read_csv()
-  return(metadata)
-}
+#' #' Import metadata
+#' #'
+#' #' This work piggybacks on that of greerre on github, see here: (https://github.com/Puntalytics/pfr_metadata_pull)
+#' #' The pfr_metadata_pull package contains code for scraping the metadata yourself, if you're so inclined
+#' #' @return A tibble \code{metadata} containing metadata. Each row is a game.
+#' #' @examples
+#' #' metadata <- import_metadata()
+#' #' @export
+#' import_metadata <- function() {
+#'   metadata <- url('https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/game_meta_data_ready_to_merge.csv') %>%
+#'     readr::read_csv()
+#'   return(metadata)
+#' }
 
