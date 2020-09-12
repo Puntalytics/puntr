@@ -64,13 +64,31 @@
 <div id="puntr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#puntr" class="anchor"></a>puntr</h1></div>
-<p>All your favorite Puntalytics code, now in package form.</p>
-<p>You can install via:</p>
+<p>Welcome to the documentation for <code>puntr</code>, an R package for puntalytics</p>
+<p>Install via:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"Puntalytics/puntr"</span>)
 </pre></div>
-<p>If you’re used to using <a href="https://github.com/mrcaseb/nflfastR">nflfastR</a>, the data format should look familiar; if not, be sure to check it out. Big thanks to them and their predecessors at nflscrapR for all of their hard work compiling these datasets.</p>
-<p>In lieu of real documentation, there’s some additonal information about the package on our <a href="https://puntalytics.github.io/puntr_package.html">website</a></p>
+<p>Once that’s installed, you can do</p>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">puntr</span>)
+
+<span class="kw">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/import_punts.html">import_punts</a></span>(<span class="fl">1999</span><span class="op">:</span><span class="fl">2019</span>)
+<span class="kw">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trust_the_process.html">trust_the_process</a></span>(<span class="kw">punts_raw</span>)
+<span class="kw">punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_all.html">calculate_all</a></span>(<span class="kw">punts_cleaned</span>)
+</pre></div>
+<p>To get a dataframe <code>punts</code> where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).<br>
+To compare punters, continue with</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">mini</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_mini.html">create_mini</a></span>(<span class="kw">punts</span>)
+</pre></div>
+<p>to get a data frame where each row is a punter, and each column is an average stat for that punter.<br>
+To compare punter <strong>seasons</strong>, instead use</p>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">miniY</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_miniY.html">create_miniY</a></span>(<span class="kw">punts</span>)
+</pre></div>
+<p>which gives every unique punter season a row.</p>
+<p>If you’re just looking for the data directly, you can find .rds files of all punts from each season 1999-2019 <a href="https://github.com/Puntalytics/puntr-data/tree/master/data">here</a></p>
 </div>
   </div>
 
@@ -85,6 +103,7 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Dennis Brookner <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Raphael LadenGuindon <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -93,7 +112,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Dennis Brookner.</p>
+  <p>Developed by Dennis Brookner, Raphael LadenGuindon.</p>
 </div>
 
 <div class="pkgdown">
