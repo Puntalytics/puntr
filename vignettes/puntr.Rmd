@@ -9,7 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## puntr
 Install via:
-```{r, message=FALSE}
+```{r, echo=FALSE, message=FALSE, results='hide'}
+install.packages(c("devtools", "tidyverse"), repos = "http://cran.us.r-project.org")
+```
+```{r, message=FALSE, results='hide'}
 devtools::install_github("Puntalytics/puntr")
 library(puntr)
 library(tidyverse)
