@@ -1,29 +1,7 @@
 # puntr
 
-Welcome to the documentation for `puntr`, an R package for puntalytics
-
-Install via:
-```R
-devtools::install_github("Puntalytics/puntr")
-```
-Once that's installed, you can do
-```R
-library(puntr)
-
-punts_raw <- import_punts(1999:2019)
-punts_cleaned <- trust_the_process(punts_raw)
-punts <- calculate_all(punts_cleaned)
-```
-To get a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).  
-To compare punters, continue with
-```R
-mini <- create_mini(punts)
-```
-to get a data frame where each row is a punter, and each column is an average stat for that punter.  
-To compare punter **seasons**, instead use
-```R
-miniY <- create_miniY(punts)
-```
-which gives every unique punter season a row.  
-
-If you're just looking for the data directly, you can find .rds files of all punts from each season 1999-2019 [here](https://github.com/Puntalytics/puntr-data/tree/master/data)
+Welcome to the documentation for `puntr`, an R package for puntalytics! Check out the [get started](https://puntalytics.github.io/puntr/articles/puntr.html) page for the basics.  
+  
+This package was designed by the folks behind [Puntalytics](https://twitter.com/ThePuntRunts) on twitter; if you're intested in analysis of punting, be sure to check it out. We also have a [website](https://puntalytics.github.io/) with some more verbose examples of our work, and we've contributed to [Open Source Football](https://www.opensourcefootball.com/posts/2020-08-21-rerun-exonerating-punters-for-large-returns/).  
+  
+Don't hesitate to reach out with any questions, concerns, or suggestions via twitter dm, or on github.

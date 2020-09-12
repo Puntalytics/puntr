@@ -1,5 +1,5 @@
 ---
-title: "puntr"
+title: "Getting started"
 output: html_document
 ---
 
@@ -8,5 +8,39 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## puntr
+Install via:
+```{r, message=FALSE}
+devtools::install_github("Puntalytics/puntr")
+library(puntr)
+library(tidyverse)
+```
+Once that's installed, you can import, clean, and calculate some punting data:
+```{r}
+# punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
+punts_raw <- import_punts(2018:2019) # fewer seasons is faster
+punts_cleaned <- trust_the_process(punts_raw) # process
+punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
+```
+You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).  
+  
+To compare punters, continue with
+```{r}
+mini <- create_mini(punts)
+```
+to get a dataframe where each row is a punter, and each column is an average stat for that punter.  
+```{r, echo=FALSE}
+mini <- mini %>% arrange(desc(SHARP_RERUN))
+rmarkdown::paged_table(mini)
+```
 
-A how-to for the package, hopefully
+To compare punter **seasons**, instead use
+```{r}
+miniY <- create_miniY(punts)
+```
+which gives every unique punter season a row.  
+```{r, echo=FALSE}
+miniY <- miniY %>% arrange(desc(SHARP_RERUN))
+rmarkdown::paged_table(miniY)
+```
+  
+These three dataframes - `punts`, `mini`, and `miniY` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
