@@ -16,5 +16,6 @@ A tibble \code{punts} with the calculated metrics added
 Calculate metrics
 }
 \examples{
-punts <- calculate_all(punts)
+\donttest
+calculate_all(punts)
 }

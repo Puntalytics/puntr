@@ -10,7 +10,8 @@
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{punts} containing play-by-play punting data for the specified years
 #' @examples
-#' punts <- import_punts(1999:2019)
+#' \donttest
+#' import_punts(1999:2019)
 #' @export
 import_punts <- function(years) {
   punts <- years %>%
@@ -26,7 +27,8 @@ import_punts <- function(years) {
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{pbp} containing play-by-play data for the specified years
 #' @examples
-#' pbp <- import_seasons(1999:2019)
+#' \donttest
+#' import_seasons(1999:2019)
 #' @export
 import_seasons <- function(years) {
   pbp <- years %>%
@@ -48,7 +50,8 @@ import_one_season <- function(year, url) {
 #' @param punts A tibble containing the punts to which metadata will be added
 #' @return A tibble \code{punts} with metadata added
 #' @examples
-#' punts_with_metadata <- add_metadata(punts)
+#' \donttest
+#' add_metadata(punts)
 #' @export
 add_metadata <- function(punts) {
   metadata <- import_metadata()

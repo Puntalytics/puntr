@@ -16,5 +16,6 @@ A tibble \code{punts} containing play-by-play punting data for the specified yea
 Import punting data
 }
 \examples{
-punts <- import_punts(1999:2019)
+\donttest
+import_punts(1999:2019)
 }

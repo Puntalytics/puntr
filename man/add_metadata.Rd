@@ -16,5 +16,6 @@ A tibble \code{punts} with metadata added
 This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
 }
 \examples{
-punts_with_metadata <- add_metadata(punts)
+\donttest
+add_metadata(punts)
 }

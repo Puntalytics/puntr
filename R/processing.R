@@ -14,8 +14,9 @@
 #' @param seasontype One of "REG" (default) or "POST" to filter data, or NULL to include all data
 #' @return A tibble \code{punts} with cleaned and processed play-by-play punting data
 #' @examples
-#' punts <- trust_the_process(punts)
-#' punts <- trust_the_process(punts_custom_trimmed_already, trim=FALSE)
+#' \donttest
+#' trust_the_process(punts)
+#' trust_the_process(punts_custom_trimmed_already, trim=FALSE)
 #' @export
 trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
 

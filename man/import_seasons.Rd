@@ -18,5 +18,6 @@ Import play-by-play data
 Grab all play-by-play data, not just punts
 }
 \examples{
-pbp <- import_seasons(1999:2019)
+\donttest
+import_seasons(1999:2019)
 }
