@@ -16,7 +16,7 @@ library(puntr)
 library(tidyverse) # always a good idea to do this too
 ```
 ## Using `puntr` with NFL data
-For speed, we've already scraped (using [`nflfastR`](https://mrcaseb.github.io/nflfastR/)) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data)
+For speed, we've already scraped (using [`nflfastR`](https://mrcaseb.github.io/nflfastR/)) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data). 
 Import, clean, and calculate as follows:
 ```{r}
 # punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
