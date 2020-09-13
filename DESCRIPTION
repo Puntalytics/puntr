@@ -12,7 +12,7 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports:
-    cfbscrapR,
+    cfbscrapR (>= 1.0.2),
     dplyr,
     forcats,
     ggimage,
@@ -24,5 +24,7 @@ Imports:
     purrr,
     readr,
     stringr,
-    tibble,
+    tibble
 RoxygenNote: 7.1.1
+Remotes:  
+    saiemgilani/cfbscrapR
