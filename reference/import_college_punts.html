@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="Import college punting data — import_college_punts" />
-<meta property="og:description" content="Import college punting data" />
+<meta property="og:description" content="Import college punting data for seasons in the scope of cfbscrapR.
+The default weeks parameter will work for completed seasons; ask for fewer weeks to scrape an in-progress season.
+Scraping both completed and in-progress seasons will require two separate function calls (see examples). This function is a
+wrapper around cfbscrapR::cfb_pbp_data" />
 
 
 
@@ -112,10 +115,13 @@
     </div>
 
     <div class="ref-description">
-    <p>Import college punting data</p>
+    <p>Import college punting data for seasons in the scope of <code>cfbscrapR</code>.
+The default <code>weeks</code> parameter will work for completed seasons; ask for fewer weeks to scrape an in-progress season.
+Scraping both completed and in-progress seasons will require two separate function calls (see examples). This function is a
+wrapper around <code><a href='https://rdrr.io/pkg/cfbscrapR/man/cfb_pbp_data.html'>cfbscrapR::cfb_pbp_data</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_college_punts</span>(<span class='kw'>years</span>)</pre>
+    <pre class="usage"><span class='fu'>import_college_punts</span>(<span class='kw'>years</span>, weeks = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>15</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,6 +129,10 @@
     <tr>
       <th>years</th>
       <td><p>A year or range of years to be scraped</p></td>
+    </tr>
+    <tr>
+      <th>weeks</th>
+      <td><p>A week or range or weeks, defaults to <code>1:15</code>. Use fewer weeks to scrape an in-progress season</p></td>
     </tr>
     </table>
 
@@ -132,7 +142,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>import_college_punts</span>(<span class='fl'>2018</span><span class='op'>:</span><span class='fl'>2019</span>)
+<span class='fu'>import_college_punts</span>(<span class='fl'>2018</span><span class='op'>:</span><span class='fl'>2019</span>) <span class='co'># completed seasons</span>
+<span class='fu'>import_college_punts</span>(<span class='fl'>2020</span>, weeks = <span class='fl'>1</span>) <span class='co'># just week 1 of the 2020 season</span>
 }
 </div></pre>
   </div>

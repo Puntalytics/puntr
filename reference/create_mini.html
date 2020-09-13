@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="Summarize data for players — create_mini" />
-<meta property="og:description" content="Summarize data for players" />
+<meta property="og:description" content="This function is essentially a convenient wrapper for dplyr::summarise
+which includes all of the relevant columns from a puntr-style data frame. It is unfortunately not customizable beyond the setting of a
+minimum number of punts to be included; if you have additional parameters you'd like to be summarised, the easiest thing would be to call summarise yourself.
+For comparison of punter seasons rather than punter careers, see puntr::create_miniY" />
 
 
 
@@ -112,7 +115,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Summarize data for players</p>
+    <p>This function is essentially a convenient wrapper for <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise</a></code>
+which includes all of the relevant columns from a <code>puntr</code>-style data frame. It is unfortunately not customizable beyond the setting of a
+minimum number of punts to be included; if you have additional parameters you'd like to be summarised, the easiest thing would be to call <code>summarise</code> yourself.
+For comparison of punter seasons rather than punter careers, see <code><a href='create_miniY.html'>puntr::create_miniY</a></code></p>
     </div>
 
     <pre class="usage"><span class='fu'>create_mini</span>(<span class='kw'>punts</span>, threshold = <span class='fl'>64</span>)</pre>
