@@ -10,7 +10,7 @@
 #' @param years A year or range of years to be scraped
 #' @return A tibble \code{punts} of punts in the \code{cfbscrapR} format
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' import_college_punts(2018:2019)
 #' }
 #' @export
@@ -29,7 +29,7 @@ import_college_punts <- function(years) {
 #' @param power_five Logical, defaults to TRUE to include only punters from Power 5 teams
 #' @return A tibble \code{punts} in a format usable for \code{puntr::calculate_all()}
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' college_to_pro(punts)
 #' }
 #' @export
