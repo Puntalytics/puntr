@@ -47,3 +47,19 @@ rmarkdown::paged_table(miniY)
 ```
   
 These three dataframes - `punts`, `mini`, and `miniY` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
+
+### College data
+`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the `cfbscrapR` package. Import and clean as follows:
+```{r}
+college_punts <- import_college_punts(2018:2019) %>% # import
+  college_to_pro() %>% # rename columns to those used by nflfastr
+  calculate_all() # calculate as normal
+```
+Now we can use the same code as above to compare college punters.
+```{r}
+miniY_college <- create_miniY(college_punts)
+```
+```{r, echo=FALSE}
+miniY_college <- miniY_college %>% arrange(desc(SHARP_RERUN))
+rmarkdown::paged_table(miniY_college)
+```
