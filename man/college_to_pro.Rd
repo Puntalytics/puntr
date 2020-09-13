@@ -12,10 +12,11 @@ college_to_pro(punts, power_five = TRUE)
 \item{power_five}{Logical, defaults to TRUE to include only punters from Power 5 teams}
 }
 \value{
-A tibble \code{punts} in a format usable for \code{puntr::calculate_all()}
+A tibble \code{punts} in a format usable for \code{puntr::calculate_all}
 }
 \description{
-Rename columns to play nicely with puntr functions
+Rename columns and process data such that the output can be plugged directly into \code{puntr::calculate_all},
+and the output of that can be plugged directly into \code{puntr::create_mini} (or \code{puntr::create_miniY}).
 }
 \examples{
 \dontrun{

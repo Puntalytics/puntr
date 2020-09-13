@@ -15,7 +15,10 @@ create_mini(punts, threshold = 64)
 A tibble \code{mini} where each row is a punter and each column is a stat
 }
 \description{
-Summarize data for players
+This function is essentially a convenient wrapper for \code{dplyr::summarise}
+which includes all of the relevant columns from a \code{puntr}-style data frame. It is unfortunately not customizable beyond the setting of a
+minimum number of punts to be included; if you have additional parameters you'd like to be summarised, the easiest thing would be to call \code{summarise} yourself.
+For comparison of punter seasons rather than punter careers, see \code{puntr::create_miniY}
 }
 \examples{
 \dontrun{

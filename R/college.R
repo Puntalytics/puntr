@@ -1,33 +1,32 @@
-# # here we go!
-# devtools::install_github(repo = "saiemgilani/cfbscrapR")
-# library(tidyverse)
-# library(cfbscrapR)
-# library(ggimage)
-# library(ggrepel)
-
 #' Import college punting data
-#'
+#' @description Import college punting data for seasons in the scope of \code{cfbscrapR}.
+#' The default \code{weeks} parameter will work for completed seasons; ask for fewer weeks to scrape an in-progress season.
+#' Scraping both completed and in-progress seasons will require two separate function calls (see examples). This function is a
+#' wrapper around \code{cfbscrapR::cfb_pbp_data}
 #' @param years A year or range of years to be scraped
+#' @param weeks A week or range or weeks, defaults to \code{1:15}. Use fewer weeks to scrape an in-progress season
 #' @return A tibble \code{punts} of punts in the \code{cfbscrapR} format
 #' @examples
 #' \dontrun{
-#' import_college_punts(2018:2019)
+#' import_college_punts(2018:2019) # completed seasons
+#' import_college_punts(2020, weeks = 1) # just week 1 of the 2020 season
 #' }
 #' @export
-import_college_punts <- function(years) {
-  punts <- tidyr::tibble(week = 1:15) %>% tidyr::expand(week, year=years) %>%
+import_college_punts <- function(years, weeks=1:15) {
+  punts <- tidyr::tibble(week = weeks) %>% tidyr::expand(week, year=years) %>%
     dplyr::mutate(pbp = purrr::map2(year, week, cfbscrapR::cfb_pbp_data, season_type='both')) %>%
     tidyr::unnest(cols = pbp) %>%
-    filter(play_type %>% str_detect("Punt"))
+    dplyr::filter(play_type %>% stringr::str_detect("Punt"))
   return(punts)
 }
 
 #' Convert college data to \code{puntr} format
 #'
-#' @description Rename columns to play nicely with puntr functions
+#' @description Rename columns and process data such that the output can be plugged directly into \code{puntr::calculate_all},
+#' and the output of that can be plugged directly into \code{puntr::create_mini} (or \code{puntr::create_miniY}).
 #' @param punts A data frame containing punts in the cfbscrapR format
 #' @param power_five Logical, defaults to TRUE to include only punters from Power 5 teams
-#' @return A tibble \code{punts} in a format usable for \code{puntr::calculate_all()}
+#' @return A tibble \code{punts} in a format usable for \code{puntr::calculate_all}
 #' @examples
 #' \dontrun{
 #' college_to_pro(punts)

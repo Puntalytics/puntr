@@ -13,7 +13,8 @@ import_punts(years)
 A tibble \code{punts} containing play-by-play punting data for the specified years
 }
 \description{
-Import punting data
+Easily import punting data for completed seasons. This data has been pre-scraped and compiled [here](https://github.com/Puntalytics/puntr-data/tree/master/data).
+The only cleaning performed on this data before storing is \code{filter(play_type == 'punt')}.
 }
 \examples{
 \dontrun{

@@ -2,8 +2,7 @@
 % Please edit documentation in R/import.R
 \name{import_seasons}
 \alias{import_seasons}
-\title{Import play-by-play data
-Grab all play-by-play data, not just punts}
+\title{Import play-by-play data}
 \usage{
 import_seasons(years)
 }
@@ -14,8 +13,8 @@ import_seasons(years)
 A tibble \code{pbp} containing play-by-play data for the specified years
 }
 \description{
-Import play-by-play data
-Grab all play-by-play data, not just punts
+Grab all play-by-play data, not just punts. This function pulls data directly from the \code{nflfastR-data} repo, and
+is purely a wrapper for ease of use.
 }
 \examples{
 \dontrun{

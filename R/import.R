@@ -6,7 +6,8 @@
 ## Essentially all of the data preparation and cleaning has been done already
 # You can download a .rds file containing all of the punts here:
 #' Import punting data
-#'
+#' @description Easily import punting data for completed seasons. This data has been pre-scraped and compiled [here](https://github.com/Puntalytics/puntr-data/tree/master/data).
+#' The only cleaning performed on this data before storing is \code{filter(play_type == 'punt')}.
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{punts} containing play-by-play punting data for the specified years
 #' @examples
@@ -20,11 +21,9 @@ import_punts <- function(years) {
   return(punts)
 }
 
-## You might decide you want all of the play-by-play data yourself, so you can clean/filter it as you see fit
-# Call this function with a range of years, e.g. import_seasons(1999:2019)
-# Data goes back to 1999, and should be updated week-by-week during whatever the current season is
 #' Import play-by-play data
-#' Grab all play-by-play data, not just punts
+#' @description Grab all play-by-play data, not just punts. This function pulls data directly from the \code{nflfastR-data} repo, and
+#' is purely a wrapper for ease of use.
 #' @param years A year or range of years between 1999 and 2019, inclusive
 #' @return A tibble \code{pbp} containing play-by-play data for the specified years
 #' @examples
@@ -48,7 +47,7 @@ import_one_season <- function(year, url) {
 
 #' #' Add metadata to punts
 #' #'
-#' #' This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
+#' #' @description This function adds game metadata to your play-by-play dataframe (should work for dataframes containing non-punting data too, fwiw)
 #' #' @param punts A tibble containing the punts to which metadata will be added
 #' #' @return A tibble \code{punts} with metadata added
 #' #' @examples

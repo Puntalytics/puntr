@@ -87,7 +87,7 @@
 <div id="using-puntr-with-nfl-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-puntr-with-nfl-data" class="anchor"></a>Using <code>puntr</code> with NFL data</h2>
-<p>For speed, we’ve already scraped (using <a href="https://mrcaseb.github.io/nflfastR/"><code>nflfastR</code></a>) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from <a href="https://github.com/Puntalytics/puntr-data/tree/master/data">here</a> Import, clean, and calculate as follows:</p>
+<p>For speed, we’ve already scraped (using <a href="https://mrcaseb.github.io/nflfastR/"><code>nflfastR</code></a>) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from <a href="https://github.com/Puntalytics/puntr-data/tree/master/data">here</a>. Import, clean, and calculate as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co"># punts_raw &lt;- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!</span>
 <span class="kw">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span>(<span class="fl">2018</span><span class="op">:</span><span class="fl">2019</span>) <span class="co"># fewer seasons is faster</span>

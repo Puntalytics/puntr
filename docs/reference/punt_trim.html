@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Filter columns relevant to punting — punt_trim" />
-<meta property="og:description" content="Filter columns relevant to punting" />
+<meta property="og:description" content="This function is exported in case you would like include custom columns; if you would NOT, you can just
+use [puntr::trust_the_process].
+If you do use puntr::punt_trim yourself, be sure to include the trim=FALSE flag in puntr::trust_the_process." />
 
 
 
@@ -112,7 +114,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Filter columns relevant to punting</p>
+    <p>This function is exported in case you would like include custom columns; if you would NOT, you can just
+use [<code><a href='trust_the_process.html'>puntr::trust_the_process</a></code>].
+If you do use <code>puntr::punt_trim</code> yourself, be sure to include the <code>trim=FALSE</code> flag in <code><a href='trust_the_process.html'>puntr::trust_the_process</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>punt_trim</span>(<span class='kw'>punts</span>, columns = <span class='kw'>NULL</span>)</pre>

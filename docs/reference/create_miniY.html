@@ -40,7 +40,12 @@
 
 
 <meta property="og:title" content="Summarize data for player-seasons — create_miniY" />
-<meta property="og:description" content="Summarize data for player-seasons" />
+<meta property="og:description" content="This function is essentially a convenient wrapper for dplyr::summarise
+which includes all of the relevant columns from a puntr-style data frame.
+This function differs from puntr::create_mini
+in that it groups by both punter_player_name and season (and adds a convenient seasonid column to uniquely identify each row).
+It is unfortunately not customizable beyond the setting of a minimum number of punts to be included;
+if you have additional parameters you'd like to be summarised, the easiest thing would be to call summarise yourself." />
 
 
 
@@ -112,7 +117,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Summarize data for player-seasons</p>
+    <p>This function is essentially a convenient wrapper for <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise</a></code>
+which includes all of the relevant columns from a <code>puntr</code>-style data frame.
+This function differs from <code><a href='create_mini.html'>puntr::create_mini</a></code>
+in that it groups by both <code>punter_player_name</code> and <code>season</code> (and adds a convenient <code>seasonid</code> column to uniquely identify each row).
+It is unfortunately not customizable beyond the setting of a minimum number of punts to be included;
+if you have additional parameters you'd like to be summarised, the easiest thing would be to call <code>summarise</code> yourself.</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_miniY</span>(<span class='kw'>punts</span>, threshold = <span class='fl'>32</span>)</pre>

@@ -15,7 +15,9 @@ punt_trim(punts, columns = NULL)
 A tibble \code{punts} containing only the specified columns
 }
 \description{
-Filter columns relevant to punting
+This function is exported in case you would like include custom columns; if you would NOT, you can just
+use [\code{puntr::trust_the_process}].
+If you do use \code{puntr::punt_trim} yourself, be sure to include the \code{trim=FALSE} flag in \code{puntr::trust_the_process}.
 }
 \examples{
 \dontrun{

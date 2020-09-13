@@ -17,7 +17,7 @@ trust_the_process(punts, seasontype = "REG", trim = TRUE)
 A tibble \code{punts} with cleaned and processed play-by-play punting data
 }
 \description{
-Clean and process play-by-play punting data
+This function handles all of the standard data cleaning necessary/preferable for puntalytics.
 }
 \examples{
 \dontrun{

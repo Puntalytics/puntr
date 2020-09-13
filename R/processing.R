@@ -8,7 +8,7 @@
 #
 # Read on for details about the functions individually, or don't!  This function will usually do the trick
 #' Clean and process play-by-play punting data
-#'
+#' @description This function handles all of the standard data cleaning necessary/preferable for puntalytics.
 #' @param punts The play-by-play punting data to be cleaned and processed
 #' @param trim Specify \code{trim=FALSE} if you would like to use \code{puntr::punt_trim} to create custom columns (or not use \code{puntr::punt_trim} at all and include all columns)
 #' @param seasontype One of "REG" (default) or "POST" to filter data, or NULL to include all data
@@ -42,7 +42,9 @@ trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
 # If you'd like additional columns, include them as a second argument.
 # If you'd like to keep all columns, include the flag columns = "ALL"
 #' Filter columns relevant to punting
-#'
+#' @description This function is exported in case you would like include custom columns; if you would NOT, you can just
+#' use [\code{puntr::trust_the_process}].
+#' If you do use \code{puntr::punt_trim} yourself, be sure to include the \code{trim=FALSE} flag in \code{puntr::trust_the_process}.
 #' @param punts The play-by-play punting data
 #' @param columns Defaults to \code{NULL} indicating trimming down to the default columns. If \code{columns} is a list of other columns, those will be additionally included
 #' @return A tibble \code{punts} containing only the specified columns
