@@ -2,8 +2,10 @@
 
 export("%>%")
 export(calculate_all)
+export(college_to_pro)
 export(create_mini)
 export(create_miniY)
+export(import_college_punts)
 export(import_punts)
 export(import_seasons)
 export(punt_trim)
