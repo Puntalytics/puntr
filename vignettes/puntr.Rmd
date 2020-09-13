@@ -2,12 +2,10 @@
 title: "Getting started"
 output: html_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## puntr
+## Installation
 Install via:
 ```{r, echo=FALSE, message=FALSE, results='hide'}
 install.packages(c("devtools", "tidyverse"), repos = "http://cran.us.r-project.org")
@@ -15,9 +13,11 @@ install.packages(c("devtools", "tidyverse"), repos = "http://cran.us.r-project.o
 ```{r, message=FALSE, results='hide'}
 devtools::install_github("Puntalytics/puntr")
 library(puntr)
-library(tidyverse)
+library(tidyverse) # always a good idea to do this too
 ```
-Once that's installed, you can import, clean, and calculate some punting data:
+## Using `puntr` with NFL data
+For speed, we've already scraped (using [`nflfastR`](https://mrcaseb.github.io/nflfastR/)) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data)
+Import, clean, and calculate as follows:
 ```{r}
 # punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
 punts_raw <- import_punts(2018:2019) # fewer seasons is faster
@@ -35,7 +35,6 @@ to get a dataframe where each row is a punter, and each column is an average sta
 mini <- mini %>% arrange(desc(SHARP_RERUN))
 rmarkdown::paged_table(mini)
 ```
-
 To compare punter **seasons**, instead use
 ```{r}
 miniY <- create_miniY(punts)
@@ -48,14 +47,14 @@ rmarkdown::paged_table(miniY)
   
 These three dataframes - `punts`, `mini`, and `miniY` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
-### College data
-`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the `cfbscrapR` package. Import and clean as follows:
+## Using `puntr` with college data
+`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
 ```{r}
-college_punts <- import_college_punts(2018:2019) %>% # import
-  college_to_pro() %>% # rename columns to those used by nflfastr
-  calculate_all() # calculate as normal
+college_punts <- import_college_punts(2018:2019) %>% # import (calls cfbscrapR behind the scenes)
+  college_to_pro() %>% # rename columns to those used by nflfastR
+  calculate_all() # calculate as with NFL data
 ```
-Now we can use the same code as above to compare college punters.
+Now we can use the same `create_miniY` as above to compare college punter seasons (`create_mini` would also work here, of course.)
 ```{r}
 miniY_college <- create_miniY(college_punts)
 ```
