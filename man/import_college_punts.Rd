@@ -16,7 +16,7 @@ A tibble \code{punts} of punts in the \code{cfbscrapR} format
 Import college punting data
 }
 \examples{
-\dontrun {
+\dontrun{
 import_college_punts(2018:2019)
 }
 }

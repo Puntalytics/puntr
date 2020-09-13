@@ -18,7 +18,7 @@ A tibble \code{punts} in a format usable for \code{puntr::calculate_all()}
 Rename columns to play nicely with puntr functions
 }
 \examples{
-\dontrun {
+\dontrun{
 college_to_pro(punts)
 }
 }
