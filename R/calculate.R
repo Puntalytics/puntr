@@ -72,15 +72,15 @@ calculate_rerun <- function(punts) {
 calculate_sharp <- function(punts) {
 
   sharp_model <- function(input) {
-    loess(formula = GrossYards ~ yardline_100, data = input, span=0.8, na.action = na.exclude)
+    loess(formula = GrossYards ~ YardsFromOwnEndZone, data = input, span=0.8, na.action = na.exclude)
   }
 
   sharpnet_model <- function(input) {
-    loess(formula = NetYards ~ yardline_100, data = input, span=0.9, na.action = na.exclude)
+    loess(formula = NetYards ~ YardsFromOwnEndZone, data = input, span=0.9, na.action = na.exclude)
   }
 
   sharprerun_model <- function(input) {
-    loess(formula = RERUN ~ yardline_100, data = input, span=0.9, na.action = na.exclude)
+    loess(formula = RERUN ~ YardsFromOwnEndZone, data = input, span=0.9, na.action = na.exclude)
   }
 
   punts <- punts %>%
