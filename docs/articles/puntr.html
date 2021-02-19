@@ -119,42 +119,8 @@ which gives every unique punter season a row.<br><div data-pagedtable="false">
 <code class="sourceCode R"><span class="va">college_punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_college_punts.html">import_college_punts</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2019</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># import (calls cfbscrapR behind the scenes)</span>
  <span class="fu"><a href="../reference/college_to_pro.html">college_to_pro</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># rename columns to those used by nflfastR</span>
  <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># calculate as with NFL data</span></code></pre></div>
-<pre><code>## 2021-02-19 16:06:27 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:29 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:34 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:35 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:36 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:38 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:39 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:40 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:41 - game_id : Invalid arguments or no betting lines data available!
-## 2021-02-19 16:06:41 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:43 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:46 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:50 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:52 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:53 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:54 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:56 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:58 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:06:59 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:00 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:01 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:02 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:04 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:06 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:07 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:09 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:11 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:14 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:17 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<pre><code>## 2021-02-19 16:07:20 - game_id : Invalid arguments or no betting lines data available!</code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># college_punts1 &lt;- import_college_punts(2018:2019) # import (calls cfbscrapR behind the scenes)</span>
-<span class="co"># college_punts2 &lt;- college_punts1 %&gt;% college_to_pro() # rename columns to those used by nflfastR</span>
-<span class="co"># college_punts3 &lt;- college_punts2 %&gt;% calculate_all() # calculate as with NFL data</span></code></pre></div>
 <p>Now we can use the same <code>create_miniY</code> as above to compare college punter seasons (<code>create_mini</code> would also work here, of course.)</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">miniY_college</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_miniY.html">create_miniY</a></span><span class="op">(</span><span class="va">college_punts</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
