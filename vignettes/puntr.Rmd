@@ -49,7 +49,7 @@ These three dataframes - `punts`, `mini`, and `miniY` - should serve as a good s
 
 ## Using `puntr` with college data
 `puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
-```{r}
+```{r message=FALSE, warning=FALSE}
 college_punts <- import_college_punts(2018:2019) %>% # import (calls cfbscrapR behind the scenes)
   college_to_pro() %>% # rename columns to those used by nflfastR
   calculate_all() # calculate as with NFL data
