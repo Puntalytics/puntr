@@ -7,7 +7,7 @@
 import_punts(years)
 }
 \arguments{
-\item{years}{A year or range of years between 1999 and 2019, inclusive}
+\item{years}{A year or range of years between 1999 and 2020, inclusive}
 }
 \value{
 A tibble \code{punts} containing play-by-play punting data for the specified years

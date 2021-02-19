@@ -1,8 +1,8 @@
 #' Import college punting data
 #' @description Import college punting data for seasons in the scope of \code{cfbscrapR}.
 #' The default \code{weeks} parameter will work for completed seasons; ask for fewer weeks to scrape an in-progress season.
-#' Scraping both completed and in-progress seasons will require two separate function calls (see examples). This function is a
-#' wrapper around \code{cfbscrapR::cfb_pbp_data}
+#' Scraping both completed and in-progress seasons will require two separate function calls (see examples).
+#' This function is a wrapper around \code{cfbscrapR::cfb_pbp_data}.
 #' @param years A year or range of years to be scraped
 #' @param weeks A week or range or weeks, defaults to \code{1:15}. Use fewer weeks to scrape an in-progress season
 #' @return A tibble \code{punts} of punts in the \code{cfbscrapR} format

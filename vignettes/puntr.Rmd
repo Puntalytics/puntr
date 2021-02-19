@@ -20,7 +20,7 @@ For speed, we've already scraped (using [`nflfastR`](https://mrcaseb.github.io/n
 Import, clean, and calculate as follows:
 ```{r}
 # punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
-punts_raw <- import_punts(2018:2019) # fewer seasons is faster
+punts_raw <- import_punts(2019:2020) # fewer seasons is faster
 punts_cleaned <- trust_the_process(punts_raw) # process
 punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
@@ -44,13 +44,22 @@ which gives every unique punter season a row.
 miniY <- miniY %>% arrange(desc(SHARP_RERUN))
 rmarkdown::paged_table(miniY)
 ```
+To compare punter **games**, instead use
+```{r}
+miniG <- create_miniG(punts)
+```
+which gives every unique punter season a row.  
+```{r, echo=FALSE}
+miniG <- miniG %>% arrange(desc(SHARP_RERUN))
+rmarkdown::paged_table(miniG)
+```
   
-These three dataframes - `punts`, `mini`, and `miniY` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
+These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
 ## Using `puntr` with college data
 `puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
 ```{r message=FALSE, warning=FALSE}
-college_punts <- import_college_punts(2018:2019) %>% # import (calls cfbscrapR behind the scenes)
+college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR behind the scenes)
  college_to_pro() %>% # rename columns to those used by nflfastR
  calculate_all() # calculate as with NFL data
 ```

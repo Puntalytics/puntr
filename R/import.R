@@ -7,7 +7,7 @@
 #' @description Easily import punting data for completed seasons.
 #' This data has been pre-scraped and compiled \href{https://github.com/Puntalytics/puntr-data/tree/master/data}{here}.
 #' The only cleaning performed on this data before storing is \code{filter(play_type == 'punt')}.
-#' @param years A year or range of years between 1999 and 2019, inclusive
+#' @param years A year or range of years between 1999 and 2020, inclusive
 #' @return A tibble \code{punts} containing play-by-play punting data for the specified years
 #' @examples
 #' \dontrun{

@@ -8,7 +8,7 @@ Authors@R: c(
 Description: A package for importing, manipulating, analyzing, and visualizing data
     related to football punting. Uses play-by-play dataframes in the format used
     by nflscrapR and nflfastR.
-License: What license is it under?
+URL: https://github.com/Puntalytics/puntr
 Encoding: UTF-8
 LazyData: true
 Imports:
