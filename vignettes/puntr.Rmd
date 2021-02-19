@@ -16,7 +16,8 @@ library(puntr)
 library(tidyverse) # always a good idea to do this too
 ```
 ## Using `puntr` with NFL data
-For speed, we've already scraped (using [`nflfastR`](https://mrcaseb.github.io/nflfastR/)) and saved punting data for the 1999-2019 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data). 
+### Completed seasons
+For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/)) and saved punting data for the 1999-2020 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data). 
 Import, clean, and calculate as follows:
 ```{r}
 # punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
@@ -24,8 +25,30 @@ punts_raw <- import_punts(2019:2020) # fewer seasons is faster
 punts_cleaned <- trust_the_process(punts_raw) # process
 punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
-You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).  
-  
+You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
+
+### In-progress seasons
+The kind folks at [`nflfastR`](https://www.nflfastr.com/) have set up a convenient `SQL`-y way to scrape data for in-progress seasons. Rather than redo all of that work, we'll just share here the code we use for this purpose:
+```{r eval=FALSE}
+#install.packages("DBI")
+#install.packages("RSQLite")
+library(DBI)
+library(RSQLite)
+library(nflfastR)
+library(puntr)
+
+update_db()
+pbp <- tbl(connection, "nflfastR_pbp")
+
+punts <- pbp %>% filter(punt_attempt==1) %>%
+  collect() %>%
+  trust_the_process() %>%
+  calculate_all()
+
+dbDisconnect(connection)
+```
+
+### Comparing punters
 To compare punters, continue with
 ```{r}
 mini <- create_mini(punts)
@@ -63,7 +86,7 @@ college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR b
  college_to_pro() %>% # rename columns to those used by nflfastR
  calculate_all() # calculate as with NFL data
 ```
-Now we can use the same `create_miniY` as above to compare college punter seasons (`create_mini` would also work here, of course.)
+Now we can use the same `create_miniY` as above to compare college punter seasons (`create_mini` and `create_miniG` would also work here, of course.)
 ```{r}
 miniY_college <- create_miniY(college_punts)
 ```
