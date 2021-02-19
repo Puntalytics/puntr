@@ -14,9 +14,9 @@
 #' @export
 import_college_punts <- function(years, weeks=1:15) {
   punts <- tidyr::tibble(week = weeks) %>% tidyr::expand(week, year=years) %>%
-    dplyr::mutate(pbp = purrr::map2(year, week, cfbscrapR::cfb_pbp_data, season_type='both')) %>%
-    tidyr::unnest(cols = pbp) %>%
-    dplyr::filter(play_type %>% stringr::str_detect("Punt"))
+    dplyr::mutate(pbp = purrr::map2(year, week, cfbscrapR::cfb_pbp_data, season_type='both', play_type="punt")) %>%
+    dplyr::select(-c(week,year)) %>%
+    tidyr::unnest(cols = pbp)
   return(punts)
 }
 
