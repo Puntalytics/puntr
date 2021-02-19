@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">puntr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
       </span>
     </div>
 
@@ -117,8 +117,8 @@ which gives every unique punter season a row.<br><div data-pagedtable="false">
 <p><code>puntr</code> can also handle punting data for college football, piggybacking off of the scraping abilities of the <a href="https://saiemgilani.github.io/cfbscrapR/"><code>cfbscrapR</code></a> package. Import and clean as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">college_punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_college_punts.html">import_college_punts</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2019</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># import (calls cfbscrapR behind the scenes)</span>
-  <span class="fu"><a href="../reference/college_to_pro.html">college_to_pro</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># rename columns to those used by nflfastR</span>
-  <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># calculate as with NFL data</span></code></pre></div>
+ <span class="fu"><a href="../reference/college_to_pro.html">college_to_pro</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># rename columns to those used by nflfastR</span>
+ <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># calculate as with NFL data</span></code></pre></div>
 <p>Now we can use the same <code>create_miniY</code> as above to compare college punter seasons (<code>create_mini</code> would also work here, of course.)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">miniY_college</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_miniY.html">create_miniY</a></span><span class="op">(</span><span class="va">college_punts</span><span class="op">)</span></code></pre></div>
