@@ -27,6 +27,7 @@ trust_the_process <- function(punts, seasontype="REG", trim=TRUE) {
   if(trim) {
     punts <- punts %>% punt_trim()
   }
+  #punts <- punts %>% fix_types()
   punts <- punts %>% add_GrossYards()
   punts <- punts %>% fix_na()
   punts <- punts %>% fix_touchbacks()
@@ -71,6 +72,14 @@ punt_trim <- function(punts, columns=NULL) {
   punts <- punts %>% dplyr::select(all_of(punt_columns))
 
   return(punts)
+}
+
+# Fix type errors resulting from vroom import
+# Inputs and outputs a dataframe "punts"
+#
+# Only handles default "punt_trim" columns
+fix_types <- function(punts) {
+
 }
 
 # Add GrossYards to data frame

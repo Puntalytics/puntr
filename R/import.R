@@ -8,16 +8,26 @@
 #' This data has been pre-scraped and compiled \href{https://github.com/Puntalytics/puntr-data/tree/master/data}{here}.
 #' The only cleaning performed on this data before storing is \code{filter(play_type == 'punt')}.
 #' @param years A year or range of years between 1999 and 2020, inclusive
+#' @param local Defaults to `FALSE`. If `TRUE`, must also specify the local path to the `puntr-data` folder. Importing a local copy of the data is much faster (~3 seconds, vs ~15 minutes)
+#' @param path The local path to the `puntr-data` folder. Required when `local = TRUE`. Omit the trailing `/`, e.g. `/Users/yourname/footballfolder`
 #' @return A tibble \code{punts} containing play-by-play punting data for the specified years
 #' @examples
 #' \dontrun{
-#' import_punts(1999:2019)
+#' import_punts(1999:2020)
+#' import_punts(1999:2020, local=TRUE, path='/my/local/path')
 #' }
 #' @export
-import_punts <- function(years) {
-  punts <- years %>%
-    purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/punts_')
-  return(punts)
+import_punts <- function(years, local = FALSE, path = NULL) {
+  if(local == TRUE) {
+    punts <- years %>%
+      purrr::map_df(import_local_season, path)
+    return(punts)
+  } else if(local == FALSE) {
+    punts <- years %>%
+      purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/punts_')
+    return(punts)
+  } else { stop("'local' must be TRUE or FALSE")}
+
 }
 
 #' Import play-by-play data
@@ -40,6 +50,13 @@ import_seasons <- function(years) {
 import_one_season <- function(year, url) {
   pbp <- glue::glue('{url}{year}.rds') %>%
     url() %>%
+    readr::read_rds()
+  return(pbp)
+}
+
+# Helper function for a single local season
+import_local_season <- function(year, path) {
+  pbp <- glue::glue('{path}/puntr-data/data/punts_{year}.rds') %>%
     readr::read_rds()
   return(pbp)
 }
