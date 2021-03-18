@@ -4,10 +4,14 @@
 \alias{import_punts}
 \title{Import punting data}
 \usage{
-import_punts(years)
+import_punts(years, local = FALSE, path = NULL)
 }
 \arguments{
 \item{years}{A year or range of years between 1999 and 2020, inclusive}
+
+\item{local}{Defaults to `FALSE`. If `TRUE`, must also specify the local path to the `puntr-data` folder. Importing a local copy of the data is much faster (~3 seconds, vs ~15 minutes)}
+
+\item{path}{The local path to the `puntr-data` folder. Required when `local = TRUE`. Omit the trailing `/`, e.g. `/Users/yourname/footballfolder`}
 }
 \value{
 A tibble \code{punts} containing play-by-play punting data for the specified years
@@ -19,6 +23,7 @@ The only cleaning performed on this data before storing is \code{filter(play_typ
 }
 \examples{
 \dontrun{
-import_punts(1999:2019)
+import_punts(1999:2020)
+import_punts(1999:2020, local=TRUE, path='/my/local/path')
 }
 }
