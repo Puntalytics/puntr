@@ -4,6 +4,7 @@ output: html_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+your_local_path <- '/Users/dennisbrookner/github'
 ```
 ## Installation
 Install via:
@@ -11,18 +12,18 @@ Install via:
 install.packages(c("devtools", "tidyverse"), repos = "http://cran.us.r-project.org")
 ```
 ```{r, message=FALSE, results='hide'}
-devtools::install_github("Puntalytics/puntr")
+devtools::install_github("Puntalytics/puntr", ref = "vroom")
 library(puntr)
 library(tidyverse) # always a good idea to do this too
 ```
 ## Using `puntr` with NFL data
 ### Completed seasons
-For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/)) and saved punting data for the 1999-2020 seasons; our import function just grabs the data from [here](https://github.com/Puntalytics/puntr-data/tree/master/data). 
+For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/)) and saved punting data for the 1999-2020 seasons. The easiest thing to do is download the `puntr-data` repo [here](https://github.com/Puntalytics/puntr-data/tree/master/data), and then point `puntr::import_punts()` to your local copy of the data. You can also download the data directly each time; this takes around 15 minutes.  
 Import, clean, and calculate as follows:
 ```{r}
-# punts_raw <- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!
-punts_raw <- import_punts(2019:2020) # fewer seasons is faster
-punts_cleaned <- trust_the_process(punts_raw) # process
+#punts_raw <- import_punts(1999:2020) # This takes ~15 minutes
+punts_raw <- import_punts(1999:2020, local=TRUE, path=your_local_path)
+punts_cleaned <- trust_the_process(punts_raw) # clean
 punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
 You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
