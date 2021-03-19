@@ -74,7 +74,7 @@ The only cleaning performed on this data before storing is filter(play_type == '
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">puntr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@ This data has been pre-scraped and compiled <a href='https://github.com/Puntalyt
 The only cleaning performed on this data before storing is <code><a href='https://rdrr.io/r/stats/filter.html'>filter(play_type == 'punt')</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_punts</span><span class='op'>(</span><span class='va'>years</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>import_punts</span><span class='op'>(</span><span class='va'>years</span>, local <span class='op'>=</span> <span class='cn'>FALSE</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +135,14 @@ The only cleaning performed on this data before storing is <code><a href='https:
     <tr>
       <th>years</th>
       <td><p>A year or range of years between 1999 and 2020, inclusive</p></td>
+    </tr>
+    <tr>
+      <th>local</th>
+      <td><p>Defaults to `FALSE`. If `TRUE`, must also specify the local path to the `puntr-data` folder. Importing a local copy of the data is much faster (~3 seconds, vs ~15 minutes)</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>The local path to the `puntr-data` folder. Required when `local = TRUE`. Omit the trailing `/`, e.g. `/Users/yourname/footballfolder`</p></td>
     </tr>
     </table>
 
@@ -144,7 +152,8 @@ The only cleaning performed on this data before storing is <code><a href='https:
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'>import_punts</span><span class='op'>(</span><span class='fl'>1999</span><span class='op'>:</span><span class='fl'>2019</span><span class='op'>)</span>
+<span class='fu'>import_punts</span><span class='op'>(</span><span class='fl'>1999</span><span class='op'>:</span><span class='fl'>2020</span><span class='op'>)</span>
+<span class='fu'>import_punts</span><span class='op'>(</span><span class='fl'>1999</span><span class='op'>:</span><span class='fl'>2020</span>, local<span class='op'>=</span><span class='cn'>TRUE</span>, path<span class='op'>=</span><span class='st'>'/my/local/path'</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

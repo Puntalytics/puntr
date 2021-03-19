@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">puntr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -99,11 +99,12 @@
 <div id="completed-seasons" class="section level3">
 <h3 class="hasAnchor">
 <a href="#completed-seasons" class="anchor"></a>Completed seasons</h3>
-<p>For speed, we’ve already scraped (using <a href="https://www.nflfastr.com/"><code>nflfastR</code></a>) and saved punting data for the 1999-2020 seasons; our import function just grabs the data from <a href="https://github.com/Puntalytics/puntr-data/tree/master/data">here</a>. Import, clean, and calculate as follows:</p>
+<p>For speed, we’ve already scraped (using <a href="https://www.nflfastr.com/"><code>nflfastR</code></a>) and saved punting data for the 1999-2020 seasons. The easiest thing to do is download the <code>puntr-data</code> repo <a href="https://github.com/Puntalytics/puntr-data/tree/master/data">here</a>, and then point <code><a href="../reference/import_punts.html">puntr::import_punts()</a></code> to your local copy of the data. You can also download the data directly each time; this takes around 15 minutes.<br>
+Import, clean, and calculate as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># punts_raw &lt;- import_punts(1999:2019) # this takes a minute or two - there have been a lot of punts since 1999!</span>
-<span class="va">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="co"># fewer seasons is faster</span>
-<span class="va">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust_the_process.html">trust_the_process</a></span><span class="op">(</span><span class="va">punts_raw</span><span class="op">)</span> <span class="co"># process</span>
+<code class="sourceCode R"><span class="co">#punts_raw &lt;- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended</span>
+<span class="va">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="co"># This takes ~15 minutes</span>
+<span class="va">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust_the_process.html">trust_the_process</a></span><span class="op">(</span><span class="va">punts_raw</span><span class="op">)</span> <span class="co"># clean</span>
 <span class="va">punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="va">punts_cleaned</span><span class="op">)</span> <span class="co"># calculate custom Puntalytics metrics </span></code></pre></div>
 <p>You now have a dataframe <code>punts</code> where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).</p>
 </div>
