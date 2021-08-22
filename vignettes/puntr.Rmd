@@ -75,7 +75,7 @@ To compare punter **games**, instead use
 ```{r}
 #miniG <- create_miniG(punts)
 ```
-which gives every unique punter season a row.  
+which gives every unique punter game a row.  
 ```{r, echo=FALSE}
 #miniG <- miniG %>% arrange(desc(SHARP_RERUN))
 #rmarkdown::paged_table(miniG)
