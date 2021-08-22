@@ -1,6 +1,8 @@
 ---
 title: "Getting started"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -82,17 +84,18 @@ rmarkdown::paged_table(miniG)
 These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
 ## Using `puntr` with college data
+NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.
 `puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR behind the scenes)
  college_to_pro() %>% # rename columns to those used by nflfastR
  calculate_all() # calculate as with NFL data
 ```
 Now we can use the same `create_miniY` as above to compare college punter seasons (`create_mini` and `create_miniG` would also work here, of course.)
-```{r}
+```{r, eval=FALSE}
 miniY_college <- create_miniY(college_punts)
 ```
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 miniY_college <- miniY_college %>% arrange(desc(SHARP_RERUN))
 rmarkdown::paged_table(miniY_college)
 ```
