@@ -102,16 +102,24 @@
 Import, clean, and calculate as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#punts_raw &lt;- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended</span>
-<span class="co">#punts_raw &lt;- import_punts(2018:2020) # This takes ~15 minutes</span>
-<span class="co">#punts_cleaned &lt;- trust_the_process(punts_raw) # clean</span>
-<span class="co">#punts &lt;- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics </span></code></pre></div>
+<span class="va">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="co"># This takes ~15 minutes</span>
+<span class="va">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust_the_process.html">trust_the_process</a></span><span class="op">(</span><span class="va">punts_raw</span><span class="op">)</span> <span class="co"># clean</span>
+<span class="va">punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="va">punts_cleaned</span><span class="op">)</span> <span class="co"># calculate custom Puntalytics metrics </span></code></pre></div>
+<pre><code>## puntr::calculate_all - Preparing data for calculations</code></pre>
+<pre><code>## puntr::calculate_all - Declaring models</code></pre>
+<pre><code>## puntr::calculate_all - Calculating RERUN</code></pre>
+<pre><code>## Calculated RERUN: 0.654 sec elapsed</code></pre>
+<pre><code>## puntr::calculate_all - Calculating SHARP</code></pre>
+<pre><code>## Calculated SHARP: 4.498 sec elapsed</code></pre>
+<pre><code>## puntr::calculate_all - Calculating pEPA</code></pre>
+<pre><code>## Calculated pEPA: 1.017 sec elapsed</code></pre>
 <p>You now have a dataframe <code>punts</code> where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).</p>
 </div>
 <div id="in-progress-seasons" class="section level3">
 <h3 class="hasAnchor">
 <a href="#in-progress-seasons" class="anchor"></a>In-progress seasons</h3>
 <p>The kind folks at <a href="https://www.nflfastr.com/"><code>nflfastR</code></a> have set up a convenient <code>SQL</code>-y way to scrape data for in-progress seasons. Rather than redo all of that work, we’ll just share here the code we use for this purpose:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#install.packages("DBI")</span>
 <span class="co">#install.packages("RSQLite")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org">DBI</a></span><span class="op">)</span>
@@ -134,15 +142,15 @@ Import, clean, and calculate as follows:</p>
 <h3 class="hasAnchor">
 <a href="#comparing-punters" class="anchor"></a>Comparing punters</h3>
 <p>To compare punters, continue with</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#mini &lt;- create_mini(punts)</span></code></pre></div>
 <p>to get a dataframe where each row is a punter, and each column is an average stat for that punter.</p>
 <p>To compare punter <strong>seasons</strong>, instead use</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#miniY &lt;- create_miniY(punts)</span></code></pre></div>
 <p>which gives every unique punter season a row.</p>
 <p>To compare punter <strong>games</strong>, instead use</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#miniG &lt;- create_miniG(punts)</span></code></pre></div>
 <p>which gives every unique punter game a row.</p>
 <p>These dataframes - <code>punts</code>, <code>mini</code>, <code>miniY</code> and <code>miniG</code> - should serve as a good starting point for any custom analysis you’d like to do, be that using built-in <code>puntr</code> metrics, or your own.</p>
@@ -152,12 +160,12 @@ Import, clean, and calculate as follows:</p>
 <h2 class="hasAnchor">
 <a href="#using-puntr-with-college-data" class="anchor"></a>Using <code>puntr</code> with college data</h2>
 <p>NOTE: <code>puntr</code> currently does not work with college data, as migration from <code>cfbscrapR</code> to <code>cfbfastR</code> is ongoing. <code>puntr</code> can also handle punting data for college football, piggybacking off of the scraping abilities of the <a href="https://saiemgilani.github.io/cfbscrapR/"><code>cfbscrapR</code></a> package. Import and clean as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">college_punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_college_punts.html">import_college_punts</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># import (calls cfbscrapR behind the scenes)</span>
  <span class="fu"><a href="../reference/college_to_pro.html">college_to_pro</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># rename columns to those used by nflfastR</span>
  <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># calculate as with NFL data</span></code></pre></div>
 <p>Now we can use the same <code>create_miniY</code> as above to compare college punter seasons (<code>create_mini</code> and <code>create_miniG</code> would also work here, of course.)</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">miniY_college</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_miniY.html">create_miniY</a></span><span class="op">(</span><span class="va">college_punts</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
