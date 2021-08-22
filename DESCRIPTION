@@ -1,7 +1,7 @@
 Package: puntr
 Type: Package
 Title: Analysis of Punting
-Version: 1.1.8
+Version: 1.2.0
 Authors@R: c(
     person("Dennis", "Brookner", role = c("aut", "cre"), email = "debrookner@gmail.com"),
     person("Raphael", "LadenGuindon", role = "aut"))
@@ -12,7 +12,6 @@ URL: https://github.com/Puntalytics/puntr
 Encoding: UTF-8
 LazyData: true
 Imports:
-    cfbscrapR (>= 1.0.2),
     dplyr,
     forcats,
     ggimage,
@@ -26,5 +25,4 @@ Imports:
     stringr,
     tibble
 RoxygenNote: 7.1.1
-Remotes:  
-    saiemgilani/cfbscrapR
+
