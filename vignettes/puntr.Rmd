@@ -22,7 +22,7 @@ For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/))
 Import, clean, and calculate as follows:
 ```{r}
 #punts_raw <- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended
-punts_raw <- import_punts(2019:2020) # This takes ~15 minutes
+punts_raw <- import_punts(2018:2020) # This takes ~15 minutes
 punts_cleaned <- trust_the_process(punts_raw) # clean
 punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
@@ -39,6 +39,7 @@ library(nflfastR)
 library(puntr)
 
 update_db()
+connection <- dbConnect(SQLite(), "./pbp_db")
 pbp <- tbl(connection, "nflfastR_pbp")
 
 punts <- pbp %>% filter(punt_attempt==1) %>%
