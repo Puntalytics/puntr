@@ -1,6 +1,7 @@
 template:
   params:
-    bootswatch: ceruleannavbar:
+    bootswatch: cerulean
+navbar:
   components:
     data:
       text: Data from past seasons
