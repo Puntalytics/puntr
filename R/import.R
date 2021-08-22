@@ -53,14 +53,14 @@ import_seasons <- function(years) {
 import_one_season <- function(year, url) {
   pbp <- glue::glue('{url}{year}.rds') %>%
     url() %>%
-    readr::read_rds()
+    readRDS()
   return(pbp)
 }
 
 # Helper function for a single local season
 import_local_season <- function(year, path) {
   pbp <- glue::glue('{path}/puntr-data/data/punts_{year}.rds') %>%
-    readr::read_rds()
+    readRDS()
   return(pbp)
 }
 

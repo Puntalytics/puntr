@@ -22,11 +22,11 @@ library(tidyverse) # always a good idea to do this too
 ### Completed seasons
 For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/)) and saved punting data for the 1999-2020 seasons. The easiest thing to do is download the `puntr-data` repo [here](https://github.com/Puntalytics/puntr-data/tree/master/data), and then point `puntr::import_punts()` to your local copy of the data. You can also download the data directly each time; this takes around 15 minutes.  
 Import, clean, and calculate as follows:
-```{r}
+```{r imports}
 #punts_raw <- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended
-punts_raw <- import_punts(2018:2020) # This takes ~15 minutes
-#punts_cleaned <- trust_the_process(punts_raw) # clean
-#punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
+punts_raw <- import_punts(2018) # This takes ~15 minutes
+punts_cleaned <- trust_the_process(punts_raw) # clean
+punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
 You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
 
