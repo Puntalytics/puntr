@@ -24,9 +24,9 @@ For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/))
 Import, clean, and calculate as follows:
 ```{r}
 #punts_raw <- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended
-punts_raw <- import_punts(2020) # This takes ~15 minutes
-punts_cleaned <- trust_the_process(punts_raw) # clean
-punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
+#punts_raw <- import_punts(2018:2020) # This takes ~15 minutes
+#punts_cleaned <- trust_the_process(punts_raw) # clean
+#punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics 
 ```
 You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
 
@@ -55,30 +55,30 @@ dbDisconnect(connection)
 ### Comparing punters
 To compare punters, continue with
 ```{r}
-mini <- create_mini(punts)
+#mini <- create_mini(punts)
 ```
 to get a dataframe where each row is a punter, and each column is an average stat for that punter.  
 ```{r, echo=FALSE}
-mini <- mini %>% arrange(desc(SHARP_RERUN))
-rmarkdown::paged_table(mini)
+#mini <- mini %>% arrange(desc(SHARP_RERUN))
+#rmarkdown::paged_table(mini)
 ```
 To compare punter **seasons**, instead use
 ```{r}
-miniY <- create_miniY(punts)
+#miniY <- create_miniY(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-miniY <- miniY %>% arrange(desc(SHARP_RERUN))
-rmarkdown::paged_table(miniY)
+#miniY <- miniY %>% arrange(desc(SHARP_RERUN))
+#rmarkdown::paged_table(miniY)
 ```
 To compare punter **games**, instead use
 ```{r}
-miniG <- create_miniG(punts)
+#miniG <- create_miniG(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-miniG <- miniG %>% arrange(desc(SHARP_RERUN))
-rmarkdown::paged_table(miniG)
+#miniG <- miniG %>% arrange(desc(SHARP_RERUN))
+#rmarkdown::paged_table(miniG)
 ```
   
 These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
