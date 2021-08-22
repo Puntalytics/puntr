@@ -7,7 +7,7 @@
 #' @description This function is essentially a convenient wrapper for \code{dplyr::summarise}
 #' which includes all of the relevant columns from a \code{puntr}-style data frame. It is unfortunately not customizable beyond the setting of a
 #' minimum number of punts to be included; if you have additional parameters you'd like to be summarised, the easiest thing would be to call \code{summarise} yourself.
-#' For comparison of punter seasons rather than punter careers, see \code{puntr::create_miniY}
+#' For comparison of punter seasons, see \code{puntr::create_miniY}; for comparison of punter games, see \code{puntr::create_miniG}.
 #' @param punts The play-by-play punting data to be summarized
 #' @param threshold The minimum number of career punts needed to be included, defaults to 64
 #' @return A tibble \code{mini} where each row is a punter and each column is a stat
@@ -38,8 +38,8 @@ create_mini <- function(punts, threshold=64) {
                      # Punt_epa_tot = sum(punt_epa),
                      # Punt_epaae_avg = mean(punt_epa_above_expected),
                      # Punt_epaae_tot = sum(punt_epa_above_expected),
-                     Punt_eaepaae_avg = mean(ea_punt_epa_above_expected),
-                     Punt_eaepaae_tot = sum(ea_punt_epa_above_expected),
+                     Punt_eaepaae_avg = mean(pEPA),
+                     Punt_eaepaae_tot = sum(pEPA),
                      returnpct = mean(returned),
                      first_year = min(season),
                      last_year = max(season),
@@ -87,8 +87,8 @@ create_miniY <- function(punts, threshold=32) {
                      # Punt_epa_tot = sum(punt_epa),
                      # Punt_epaae_avg = mean(punt_epa_above_expected),
                      # Punt_epaae_tot = sum(punt_epa_above_expected),
-                     Punt_eaepaae_avg = mean(ea_punt_epa_above_expected),
-                     Punt_eaepaae_tot = sum(ea_punt_epa_above_expected),
+                     Punt_eaepaae_avg = mean(pEPA),
+                     Punt_eaepaae_tot = sum(pEPA),
                      returnpct = mean(returned),
                      #returnpctpd = mean(returned_pd, na.rm = TRUE),
                      #returnpctof = mean(returned_of, na.rm = TRUE),
@@ -141,8 +141,8 @@ create_miniG <- function(punts, threshold=1) {
                      # Punt_epa_tot = sum(punt_epa),
                      # Punt_epaae_avg = mean(punt_epa_above_expected),
                      # Punt_epaae_tot = sum(punt_epa_above_expected),
-                     Punt_eaepaae_avg = mean(ea_punt_epa_above_expected),
-                     Punt_eaepaae_tot = sum(ea_punt_epa_above_expected),
+                     Punt_eaepaae_avg = mean(pEPA),
+                     Punt_eaepaae_tot = sum(pEPA),
                      returnpct = mean(returned),
                      #returnpctpd = mean(returned_pd, na.rm = TRUE),
                      #returnpctof = mean(returned_of, na.rm = TRUE),

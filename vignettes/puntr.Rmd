@@ -22,7 +22,7 @@ library(tidyverse) # always a good idea to do this too
 ### Completed seasons
 For speed, we've already scraped (using [`nflfastR`](https://www.nflfastr.com/)) and saved punting data for the 1999-2020 seasons. The easiest thing to do is download the `puntr-data` repo [here](https://github.com/Puntalytics/puntr-data/tree/master/data), and then point `puntr::import_punts()` to your local copy of the data. You can also download the data directly each time; this takes around 15 minutes.  
 Import, clean, and calculate as follows:
-```{r imports}
+```{r imports, message=FALSE}
 #punts_raw <- import_punts(1999:2020, local=TRUE, path=your_local_path) # recommended
 punts_raw <- import_punts(2018:2020) # This takes ~15 minutes
 punts_cleaned <- trust_the_process(punts_raw) # clean
@@ -55,36 +55,37 @@ dbDisconnect(connection)
 ### Comparing punters
 To compare punters, continue with
 ```{r}
-#mini <- create_mini(punts)
+mini <- create_mini(punts)
 ```
-to get a dataframe where each row is a punter, and each column is an average stat for that punter.  
-```{r, echo=FALSE}
-#mini <- mini %>% arrange(desc(SHARP_RERUN))
-#rmarkdown::paged_table(mini)
+to get a dataframe where each row is a punter, and each column is an average stat for that punter. There are many columns in this dataframe, but here's a few of the most interesting:  
+```{r}
+mini <- mini %>% arrange(desc(pEPA)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
+rmarkdown::paged_table(mini)
 ```
 To compare punter **seasons**, instead use
 ```{r}
-#miniY <- create_miniY(punts)
+miniY <- create_miniY(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-#miniY <- miniY %>% arrange(desc(SHARP_RERUN))
-#rmarkdown::paged_table(miniY)
+miniY <- miniY %>% arrange(desc(pEPA))
+rmarkdown::paged_table(miniY)
 ```
 To compare punter **games**, instead use
 ```{r}
-#miniG <- create_miniG(punts)
+miniG <- create_miniG(punts)
 ```
 which gives every unique punter game a row.  
 ```{r, echo=FALSE}
-#miniG <- miniG %>% arrange(desc(SHARP_RERUN))
-#rmarkdown::paged_table(miniG)
+miniG <- miniG %>% arrange(desc(pEPA))
+rmarkdown::paged_table(miniG)
 ```
   
 These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
 ## Using `puntr` with college data
-NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.
+***NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.***
+  
 `puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR behind the scenes)
