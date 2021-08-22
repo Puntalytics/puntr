@@ -1,5 +1,6 @@
-theme: jekyll-theme-modernist
-navbar:
+template:
+  params:
+    bootswatch: ceruleannavbar:
   components:
     data:
       text: Data from past seasons
