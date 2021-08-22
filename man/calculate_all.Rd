@@ -13,10 +13,7 @@ calculate_all(punts)
 A tibble \code{punts} with the calculated metrics added
 }
 \description{
-This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet and SHARP_RERUN
-(plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.)
-This function will continue to be updated as new metrics are added.
-Currently, functions for calculating individual metrics are for internal use only, and not exported.
+This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet and SHARP_RERUN (plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.)
 }
 \examples{
 \dontrun{
