@@ -1,6 +1,4 @@
-template:
-  params:
-    bootswatch: cerulean
+theme: jekyll-theme-modernist
 navbar:
   components:
     data:
