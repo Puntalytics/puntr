@@ -40,9 +40,7 @@
 
 
 <meta property="og:title" content="Calculate metrics — calculate_all" />
-<meta property="og:description" content="This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet, and SHARP_RERUN
-(plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.) This function will continue to be updated as new metrics are added.
-Currently, functions for calculating individual metrics are for internal use only, and not exported." />
+<meta property="og:description" content="This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet and SHARP_RERUN (plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.)" />
 
 
 
@@ -74,7 +72,7 @@ Currently, functions for calculating individual metrics are for internal use onl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">puntr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -122,9 +120,7 @@ Currently, functions for calculating individual metrics are for internal use onl
     </div>
 
     <div class="ref-description">
-    <p>This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet, and SHARP_RERUN
-(plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.) This function will continue to be updated as new metrics are added.
-Currently, functions for calculating individual metrics are for internal use only, and not exported.</p>
+    <p>This function adds all Puntalytics metrics to your punting data: RERUN, SHARP, SHARPnet and SHARP_RERUN (plus open-field and pin-deep versions of the 3 SHARPs) as well as average and cumulative EPA (our custom EPA metric.)</p>
     </div>
 
     <pre class="usage"><span class='fu'>calculate_all</span><span class='op'>(</span><span class='va'>punts</span><span class='op'>)</span></pre>
@@ -134,7 +130,7 @@ Currently, functions for calculating individual metrics are for internal use onl
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>punts</th>
-      <td><p>The already-processed play-by-play punting data to which metrics will be added</p></td>
+      <td><p>The already-processed play-by-play punting data to which metrics will be added. Must contain at least three seasons and 1000 punts.</p></td>
     </tr>
     </table>
 
