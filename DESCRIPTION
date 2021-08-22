@@ -23,6 +23,7 @@ Imports:
     purrr,
     readr,
     stringr,
-    tibble
+    tibble,
+    tictoc
 RoxygenNote: 7.1.1
 
