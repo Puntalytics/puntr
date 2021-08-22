@@ -59,7 +59,7 @@ mini <- create_mini(punts)
 ```
 to get a dataframe where each row is a punter, and each column is an average stat for that punter. There are many columns in this dataframe, but here's a few of the most interesting:  
 ```{r}
-mini <- mini %>% arrange(desc(pEPA)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
+mini <- mini %>% arrange(desc(Punt_eaepaae_avg)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
 rmarkdown::paged_table(mini)
 ```
 To compare punter **seasons**, instead use
@@ -68,7 +68,7 @@ miniY <- create_miniY(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-miniY <- miniY %>% arrange(desc(pEPA))
+miniY <- miniY %>% arrange(desc(Punt_eaepaae_avg))
 rmarkdown::paged_table(miniY)
 ```
 To compare punter **games**, instead use
@@ -77,7 +77,7 @@ miniG <- create_miniG(punts)
 ```
 which gives every unique punter game a row.  
 ```{r, echo=FALSE}
-miniG <- miniG %>% arrange(desc(pEPA))
+miniG <- miniG %>% arrange(desc(Punt_eaepaae_avg))
 rmarkdown::paged_table(miniG)
 ```
   
