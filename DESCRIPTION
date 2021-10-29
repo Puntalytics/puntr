@@ -1,7 +1,7 @@
 Package: puntr
 Type: Package
 Title: Analysis of Punting
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(
     person("Dennis", "Brookner", role = c("aut", "cre"), email = "debrookner@gmail.com"),
     person("Raphael", "LadenGuindon", role = "aut"))
@@ -25,5 +25,4 @@ Imports:
     stringr,
     tibble,
     tictoc
-RoxygenNote: 7.1.1
-
+RoxygenNote: 7.1.2
