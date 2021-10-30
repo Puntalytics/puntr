@@ -15,7 +15,7 @@ install.packages(c("devtools", "tidyverse"), repos = "http://cran.us.r-project.o
 ```
 ```{r, message=FALSE, results='hide'}
 devtools::install_github("Puntalytics/puntr")
-library(puntr)
+library(puntr
 library(tidyverse) # always a good idea to do this too
 ```
 ## Using `puntr` with NFL data
