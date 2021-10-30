@@ -5,11 +5,11 @@
 #' @return A tibble \code{punts} of punts in the \code{cfbfastR} format
 #' @examples
 #' \dontrun{
-#' import_college_punts(2018:2019)
+#' import_college_punts(2018:2021)
 #' }
 #' @export
 import_college_punts <- function(years) {
-  punts <- map_df(years, function(x){
+  punts <- purrr::map_df(years, function(x){
     cfbfastR::load_cfb_pbp(x) %>%
       dplyr::filter(punt == 1) %>%
       dplyr::mutate(season = x)
@@ -37,10 +37,10 @@ college_to_pro <- function(punts, power_five = TRUE) {
              stringr::str_extract("punt for [:digit:]+") %>%
              stringr::str_extract("[:digit:]+") %>%
              as.numeric()) %>%
-    #dplyr::filter(!is.na(GrossYards)) %>%
+    dplyr::filter(!is.na(GrossYards)) %>%
     dplyr::mutate(return_yards = as.numeric(yds_punt_return),
                   return_yards = ifelse(is.na(return_yards),0,return_yards),
-                  return_yards = ifelse(str_detect(play_text,"loss"),-1*return_yards,return_yards)) %>%
+                  return_yards = ifelse(stringr::str_detect(play_text,"loss"),-1*return_yards,return_yards)) %>%
     #dplyr::filter(!is.na(return_yards)) %>%
     dplyr::mutate(punter_player_name = play_text %>%
              stringr::str_extract(".+(?= punt for)")) %>%
@@ -78,7 +78,7 @@ college_to_pro <- function(punts, power_five = TRUE) {
            team_color = color,
            team_color2 = alt_color)
 
-  punts <- punts %>% dplyr::inner_join(team_info, by = c("offense_play" = "team_abbr"))
+  punts <- punts %>% dplyr::inner_join(team_info, by = c("pos_team" = "team_abbr"))
 
   return(punts)
 }

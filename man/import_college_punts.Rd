@@ -18,6 +18,6 @@ This function is a wrapper around \code{cfbfastR::load_cfb_pbp}.
 }
 \examples{
 \dontrun{
-import_college_punts(2018:2019)
+import_college_punts(2018:2021)
 }
 }
