@@ -90,11 +90,11 @@ rmarkdown::paged_table(miniG)
 These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own. If a punter or punter-season you're looking for is missing, try playing around with the `threshold = ` parameter.
 
 ## Using `puntr` with college data
-***NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.***
+***NOTE: `puntr` was successfully migrated from `cfbscrapR` to `cfbfastR` in version 1.2.2***
   
-`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
+`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbfastR`](https://saiemgilani.github.io/cfbfastR/) package. You need at least 3 seasons worth of data to run `calculate_all()`. Import and clean as follows:
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR behind the scenes)
+college_punts <- import_college_punts(2019:2021) %>% # import (calls cfbfastR behind the scenes)
  college_to_pro() %>% # rename columns to those used by nflfastR
  calculate_all() # calculate as with NFL data
 ```

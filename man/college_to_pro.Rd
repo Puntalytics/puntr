@@ -7,7 +7,7 @@
 college_to_pro(punts, power_five = TRUE)
 }
 \arguments{
-\item{punts}{A data frame containing punts in the cfbscrapR format}
+\item{punts}{A data frame containing punts in the cfbfastR format}
 
 \item{power_five}{Logical, defaults to TRUE to include only punters from Power 5 teams}
 }
