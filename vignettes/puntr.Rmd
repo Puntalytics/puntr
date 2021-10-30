@@ -67,7 +67,6 @@ to get a dataframe where each row is a punter, and each column is an average sta
 mini <- mini %>% arrange(desc(Punt_eaepaae_avg)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
 rmarkdown::paged_table(mini)
 ```
-By default, `create_mini()` includes only punter-seasons with 32 or more punts. To include seasons with fewer punts, use the `threshold = ` parameter. 
 
 To compare punter **seasons**, instead use
 ```{r}
@@ -88,7 +87,7 @@ miniG <- miniG %>% arrange(desc(Punt_eaepaae_avg))
 rmarkdown::paged_table(miniG)
 ```
   
-These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
+These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own. If a punter or punter-season you're looking for is missing, try playing around with the `threshold = ` parameter.
 
 ## Using `puntr` with college data
 ***NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.***
