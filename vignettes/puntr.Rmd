@@ -30,6 +30,9 @@ punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics
 ```
 You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
 
+#### Note about minimum dataframe size
+`puntr` calculates stats using 3-year rolling averages, to avoid any artifacts of anomalous seasons. For this reason, `puntr::calculate_all()` requires a dataframe containing at least **3 seasons** and **1000 punts**. Note in the above example that three seasons are used. Note in the below example that three seasons are used for the calculation, after which all but the most recent seasons are filtered out.
+
 ### In-progress seasons
 The kind folks at [`nflfastR`](https://www.nflfastr.com/) have set up a convenient `SQL`-y way to scrape data for in-progress seasons. Rather than redo all of that work, we'll just share here the code we use for this purpose:
 ```{r eval=FALSE}
@@ -45,9 +48,11 @@ connection <- dbConnect(SQLite(), "./pbp_db")
 pbp <- tbl(connection, "nflfastR_pbp")
 
 punts <- pbp %>% filter(punt_attempt==1) %>%
+  filter(season %in% 2019:2021)
   collect() %>%
   trust_the_process() %>%
-  calculate_all()
+  calculate_all() %>%
+  filter(season == 2021)
 
 dbDisconnect(connection)
 ```
@@ -62,6 +67,8 @@ to get a dataframe where each row is a punter, and each column is an average sta
 mini <- mini %>% arrange(desc(Punt_eaepaae_avg)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
 rmarkdown::paged_table(mini)
 ```
+By default, `create_mini()` includes only punter-seasons with 32 or more punts. To include seasons with fewer punts, use the `threshold = ` parameter. 
+
 To compare punter **seasons**, instead use
 ```{r}
 miniY <- create_miniY(punts)
