@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">puntr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -106,9 +106,9 @@ Import, clean, and calculate as follows:</p>
 <span class="va">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="co"># This takes ~15 minutes</span>
 <span class="va">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust_the_process.html">trust_the_process</a></span><span class="op">(</span><span class="va">punts_raw</span><span class="op">)</span> <span class="co"># clean</span>
 <span class="va">punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="va">punts_cleaned</span><span class="op">)</span> <span class="co"># calculate custom Puntalytics metrics </span></code></pre></div>
-<pre><code>## Calculated RERUN: 0.765 sec elapsed
-## Calculated SHARP: 4.202 sec elapsed
-## Calculated pEPA: 0.938 sec elapsed</code></pre>
+<pre><code>## Calculated RERUN: 0.39 sec elapsed
+## Calculated SHARP: 4.824 sec elapsed
+## Calculated pEPA: 1.03 sec elapsed</code></pre>
 <p>You now have a dataframe <code>punts</code> where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).</p>
 <div id="note-about-minimum-dataframe-size" class="section level4">
 <h4 class="hasAnchor">
@@ -178,10 +178,10 @@ which gives every unique punter game a row.<br><div data-pagedtable="false">
 <div id="using-puntr-with-college-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-puntr-with-college-data" class="anchor"></a>Using <code>puntr</code> with college data</h2>
-<p><strong><em>NOTE: <code>puntr</code> currently does not work with college data, as migration from <code>cfbscrapR</code> to <code>cfbfastR</code> is ongoing.</em></strong></p>
-<p><code>puntr</code> can also handle punting data for college football, piggybacking off of the scraping abilities of the <a href="https://saiemgilani.github.io/cfbscrapR/"><code>cfbscrapR</code></a> package. Import and clean as follows:</p>
+<p><strong><em>NOTE: <code>puntr</code> was successfully migrated from <code>cfbscrapR</code> to <code>cfbfastR</code> in version 1.2.2</em></strong></p>
+<p><code>puntr</code> can also handle punting data for college football, piggybacking off of the scraping abilities of the <a href="https://saiemgilani.github.io/cfbfastR/"><code>cfbfastR</code></a> package. You need at least 3 seasons worth of data to run <code><a href="../reference/calculate_all.html">calculate_all()</a></code>. Import and clean as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">college_punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_college_punts.html">import_college_punts</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># import (calls cfbscrapR behind the scenes)</span>
+<code class="sourceCode R"><span class="va">college_punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_college_punts.html">import_college_punts</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># import (calls cfbfastR behind the scenes)</span>
  <span class="fu"><a href="../reference/college_to_pro.html">college_to_pro</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># rename columns to those used by nflfastR</span>
  <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># calculate as with NFL data</span></code></pre></div>
 <p>Now we can use the same <code>create_miniY</code> as above to compare college punter seasons (<code>create_mini</code> and <code>create_miniG</code> would also work here, of course.)</p>
