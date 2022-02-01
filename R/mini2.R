@@ -12,10 +12,12 @@
 #' @param punts The play-by-play punting data to be summarized
 #' @param threshold The minimum number of career punts needed to be included, defaults to 64
 #' @param ... Any additional arguments will be passed through to \code{dplyr::summarise}
-#' @return A tibble \code{punters} where each row is a punter and each column is a stat
+#' @return A tibble where each row is a punter and each column is a stat
 #' @examples
 #' \dontrun{
-#' create_mini(punts)
+#' punters <- by_punters(punts)
+#' punters_custom <- by_punters(punts, longest_punt = max(GrossYards))
+#' more_punters <- by_punters(punts, threshold=16)
 #' }
 #' @export
 by_punters <- function(punts, ..., threshold=64) {
@@ -39,10 +41,10 @@ by_punters <- function(punts, ..., threshold=64) {
 #' if you have additional parameters you'd like to be summarised, the easiest thing would be to call \code{summarise} yourself.
 #' @param punts The play-by-play punting data to be summarized
 #' @param threshold The minimum number of punts for a season to be included, defaults to 32
-#' @return A tibble \code{miniY} where each row is a punter-season and each column is a stat
+#' @return A tibble where each row is a punter-season and each column is a stat
 #' @examples
 #' \dontrun{
-#' create_miniY(punts)
+#' by_punter_seasons(punts)
 #' }
 #' @export
 by_punter_seasons <- function(punts, ..., threshold=32) {
@@ -68,10 +70,10 @@ by_punter_seasons <- function(punts, ..., threshold=32) {
 #' if you have additional parameters you'd like to be summarised, the easiest thing would be to call \code{summarise} yourself.
 #' @param punts The play-by-play punting data to be summarized
 #' @param threshold The minimum number of punts for a week to be included, defaults to 1
-#' @return A tibble \code{miniG} where each row is a punter-week and each column is a stat
+#' @return A tibble where each row is a punter-week and each column is a stat
 #' @examples
 #' \dontrun{
-#' create_miniG(punts)
+#' by_punter_games(punts)
 #' }
 #' @export
 by_punter_games <- function(punts, ..., threshold=1) {
