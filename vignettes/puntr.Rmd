@@ -53,35 +53,53 @@ dbDisconnect(connection)
 ```
 
 ### Comparing punters
-To compare punters, continue with
+***Note***: New in `puntr 1.3`, the functions
+
+* `puntr::create_mini()`
+* `puntr::create_miniY()`
+* `puntr::create_miniG()` 
+
+are now deprecated, in favor of 
+
+ - `puntr::by_punters()`
+ - `puntr::by_punter_seasons()`
+ - `puntr::by_punter_games()`  
+
+To compare punters, use
 ```{r}
-mini <- create_mini(punts)
+punters <- by_punters(punts)
 ```
-to get a dataframe where each row is a punter, and each column is an average stat for that punter. There are many columns in this dataframe, but here's a few of the most interesting:  
+to get a dataframe where each row is a punter, and each column is an average stat for that punter. The most common standard and Punt Runts stats are included by default, but you can add whatever you like by passing additional arguments to `dplyr::summarize()`. For example:
 ```{r}
-mini <- mini %>% arrange(desc(Punt_eaepaae_avg)) %>% select(punter_player_name, Gross, Net, SHARP_RERUN, Punt_eaepaae_avg)
-rmarkdown::paged_table(mini)
+punters_custom <- by_punters(punts, longest_punt = max(GrossYards))
+```
+Let's take a look at some of the columns in this data frame:  
+```{r}
+punters %>% 
+  arrange(desc(pEPA)) %>% 
+  select(punter_player_name, Gross, Net, pEPA) %>%
+  rmarkdown::paged_table()
 ```
 To compare punter **seasons**, instead use
 ```{r}
-miniY <- create_miniY(punts)
+punter_seasons <- by_punter_seasons(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-miniY <- miniY %>% arrange(desc(Punt_eaepaae_avg))
-rmarkdown::paged_table(miniY)
+punter_seasons %>%
+  arrange(desc(pEPA)) %>%
+  select(punter_player_name, season, Gross, Net, pEPA) %>%
+  rmarkdown::paged_table()
 ```
-To compare punter **games**, instead use
+And finally, to compare punter **games**, use
 ```{r}
-miniG <- create_miniG(punts)
+punter_games <- by_punter_games(punts)
 ```
 which gives every unique punter game a row.  
-```{r, echo=FALSE}
-miniG <- miniG %>% arrange(desc(Punt_eaepaae_avg))
-rmarkdown::paged_table(miniG)
-```
+
+**Note**: If a career, season, or game you're looking for is missing from your dataframe, try changing the `threshold = ` parameter to require fewer punts.
   
-These dataframes - `punts`, `mini`, `miniY` and `miniG` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
+These dataframes - `punts`, `punters`, `punter_seasons` and `punter_games` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
 ## Using `puntr` with college data
 ***NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.***

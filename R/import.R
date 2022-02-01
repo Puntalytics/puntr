@@ -27,7 +27,7 @@ import_punts <- function(years, local = FALSE, path = NULL) {
     #message("puntr::import_punts - Importing from https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/
 #For faster import, clone this repo locally and use local = TRUE")
     punts <- years %>%
-      purrr::map_df(import_one_season, 'https://raw.githubusercontent.com/Puntalytics/puntr-data/master/data/punts_')
+      purrr::map_df(import_one_season, 'https://github.com/mlounsberry/Punt-Charting-2021/blob/main/Punt-Data/2021_01_DAL_TB.csv')
     return(punts)
   } else { stop("'local' must be TRUE or FALSE")}
 
