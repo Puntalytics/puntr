@@ -4,8 +4,8 @@ which includes all of the relevant columns from a puntr-style data frame.
 This function differs from puntr::create_mini and puntr::create_miniY
 in that it groups by punter_player_name, season, and week
 (and adds a convenient weekid column to uniquely identify each row).
-It is unfortunately not customizable beyond the setting of a minimum number of punts to be included;
-if you have additional parameters you'd like to be summarised, the easiest thing would be to call summarise yourself."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+NOTE: puntr::create_mini, puntr::create_miniY, and puntr::create_miniG are being phased out
+in favor of puntr::by_punters, puntr::by_punter_seasons, and puntr::by_punter_games"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -60,18 +60,20 @@ which includes all of the relevant columns from a <code>puntr</code>-style data 
 This function differs from <code><a href="create_mini.html">puntr::create_mini</a></code> and <code><a href="create_miniY.html">puntr::create_miniY</a></code>
 in that it groups by <code>punter_player_name</code>, <code>season</code>, and <code>week</code>
 (and adds a convenient <code>weekid</code> column to uniquely identify each row).
-It is unfortunately not customizable beyond the setting of a minimum number of punts to be included;
-if you have additional parameters you'd like to be summarised, the easiest thing would be to call <code>summarise</code> yourself.</p>
+NOTE: <code><a href="create_mini.html">puntr::create_mini</a></code>, <code><a href="create_miniY.html">puntr::create_miniY</a></code>, and <code>puntr::create_miniG</code> are being phased out
+in favor of <code><a href="by_punters.html">puntr::by_punters</a></code>, <code><a href="by_punter_seasons.html">puntr::by_punter_seasons</a></code>, and <code><a href="by_punter_games.html">puntr::by_punter_games</a></code></p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_miniG</span><span class="op">(</span><span class="va">punts</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_miniG</span><span class="op">(</span><span class="va">punts</span>, <span class="va">...</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>punts</dt>
 <dd><p>The play-by-play punting data to be summarized</p></dd>
+<dt>...</dt>
+<dd><p>Any additional arguments will be passed through to <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">dplyr::summarise</a></code></p></dd>
 <dt>threshold</dt>
 <dd><p>The minimum number of punts for a week to be included, defaults to 1</p></dd>
 </dl></div>
