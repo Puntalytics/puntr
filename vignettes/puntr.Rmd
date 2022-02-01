@@ -72,34 +72,34 @@ are now deprecated, in favor of
 
 To compare punters, use
 ```{r}
-punters <- by_punters(punts)
+#punters <- by_punters(punts)
 ```
 to get a dataframe where each row is a punter, and each column is an average stat for that punter. The most common standard and Punt Runts stats are included by default, but you can add whatever you like by passing additional arguments to `dplyr::summarize()`. For example:
 ```{r}
-punters_custom <- by_punters(punts, longest_punt = max(GrossYards))
+#punters_custom <- by_punters(punts, longest_punt = max(GrossYards))
 ```
 Let's take a look at some of the columns in this data frame:  
 ```{r}
-punters %>% 
-  arrange(desc(pEPA)) %>% 
-  select(punter_player_name, Gross, Net, pEPA) %>%
-  rmarkdown::paged_table()
+#punters %>% 
+#  arrange(desc(pEPA)) %>% 
+#  select(punter_player_name, Gross, Net, pEPA) %>%
+#  rmarkdown::paged_table()
 ```
 
 To compare punter **seasons**, instead use
 ```{r}
-punter_seasons <- by_punter_seasons(punts)
+#punter_seasons <- by_punter_seasons(punts)
 ```
 which gives every unique punter season a row.  
 ```{r, echo=FALSE}
-punter_seasons %>%
-  arrange(desc(pEPA)) %>%
-  select(punter_player_name, season, Gross, Net, pEPA) %>%
-  rmarkdown::paged_table()
+#punter_seasons %>%
+#  arrange(desc(pEPA)) %>%
+#  select(punter_player_name, season, Gross, Net, pEPA) %>%
+#  rmarkdown::paged_table()
 ```
 And finally, to compare punter **games**, use
 ```{r}
-punter_games <- by_punter_games(punts)
+# punter_games <- by_punter_games(punts)
 ```
 which gives every unique punter game a row.  
 
