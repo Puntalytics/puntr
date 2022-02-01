@@ -72,7 +72,7 @@ are now deprecated, in favor of
 
 To compare punters, use
 ```{r}
-#punters <- by_punters(punts)
+punters <- by_punters(punts)
 ```
 to get a dataframe where each row is a punter, and each column is an average stat for that punter. The most common standard and Punt Runts stats are included by default, but you can add whatever you like by passing additional arguments to `dplyr::summarize()`. For example:
 ```{r}
