@@ -1,6 +1,0 @@
-theme: jekyll-theme-modernist
-navbar:
-  components:
-    data:
-      text: Data from past seasons
-      href: https://github.com/Puntalytics/puntr-data/tree/master/data
