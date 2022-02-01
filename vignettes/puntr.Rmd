@@ -30,6 +30,9 @@ punts <- calculate_all(punts_cleaned) # calculate custom Puntalytics metrics
 ```
 You now have a dataframe `punts` where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).
 
+#### Note about minimum dataframe size
+`puntr` calculates stats using 3-year rolling averages, to avoid any artifacts of anomalous seasons. For this reason, `puntr::calculate_all()` requires a dataframe containing at least **3 seasons** and **1000 punts**. Note in the above example that three seasons are used. Note in the below example that three seasons are used for the calculation, after which all but the most recent seasons are filtered out.
+
 ### In-progress seasons
 The kind folks at [`nflfastR`](https://www.nflfastr.com/) have set up a convenient `SQL`-y way to scrape data for in-progress seasons. Rather than redo all of that work, we'll just share here the code we use for this purpose:
 ```{r eval=FALSE}
@@ -45,9 +48,11 @@ connection <- dbConnect(SQLite(), "./pbp_db")
 pbp <- tbl(connection, "nflfastR_pbp")
 
 punts <- pbp %>% filter(punt_attempt==1) %>%
+  filter(season %in% 2019:2021)
   collect() %>%
   trust_the_process() %>%
-  calculate_all()
+  calculate_all() %>%
+  filter(season == 2021)
 
 dbDisconnect(connection)
 ```
@@ -80,6 +85,7 @@ punters %>%
   select(punter_player_name, Gross, Net, pEPA) %>%
   rmarkdown::paged_table()
 ```
+
 To compare punter **seasons**, instead use
 ```{r}
 punter_seasons <- by_punter_seasons(punts)
@@ -101,12 +107,13 @@ which gives every unique punter game a row.
   
 These dataframes - `punts`, `punters`, `punter_seasons` and `punter_games` - should serve as a good starting point for any custom analysis you'd like to do, be that using built-in `puntr` metrics, or your own.
 
+
 ## Using `puntr` with college data
-***NOTE: `puntr` currently does not work with college data, as migration from `cfbscrapR` to `cfbfastR` is ongoing.***
+***NOTE: `puntr` was successfully migrated from `cfbscrapR` to `cfbfastR` in version 1.2.2***
   
-`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbscrapR`](https://saiemgilani.github.io/cfbscrapR/) package. Import and clean as follows:
+`puntr` can also handle punting data for college football, piggybacking off of the scraping abilities of the [`cfbfastR`](https://saiemgilani.github.io/cfbfastR/) package. You need at least 3 seasons worth of data to run `calculate_all()`. Import and clean as follows:
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-college_punts <- import_college_punts(2019:2020) %>% # import (calls cfbscrapR behind the scenes)
+college_punts <- import_college_punts(2019:2021) %>% # import (calls cfbfastR behind the scenes)
  college_to_pro() %>% # rename columns to those used by nflfastR
  calculate_all() # calculate as with NFL data
 ```
