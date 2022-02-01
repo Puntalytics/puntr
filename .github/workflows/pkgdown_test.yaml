@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown")
+          install.packages(c("pkgdown", "roxygen2"))
         shell: Rscript {0}
 
       - name: Install package
@@ -41,4 +41,5 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          Rscript -e 'pkgdown::preview_site()'
+          Rscript -e 'roxygen2::roxygenise()'
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = TRUE, branch = "gh-pages-test")'
