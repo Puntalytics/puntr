@@ -97,7 +97,10 @@ custom_summary <- function(data, ...) {
                      SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
                      SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
                      ...,
-                     team = getmode_local(posteam)
+                     team = getmode_local(posteam),
+                     team_logo_espn = getmode_local(team_logo_espn),
+                     team_color = getmode_local(team_color),
+                     team_color2 = getmode_local(team_color2),
   )
   return(.summary)
 }
