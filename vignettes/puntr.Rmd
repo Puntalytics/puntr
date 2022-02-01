@@ -66,9 +66,9 @@ dbDisconnect(connection)
 
 are now deprecated, in favor of 
 
- - `puntr::by_punters()`
- - `puntr::by_punter_seasons()`
- - `puntr::by_punter_games()`  
+* `puntr::by_punters()`
+* `puntr::by_punter_seasons()`
+* `puntr::by_punter_games()`  
 
 To compare punters, use
 ```{r}
