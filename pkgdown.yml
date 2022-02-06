@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   puntr: puntr.html
-last_built: 2022-02-06T22:48Z
+last_built: 2022-02-06T22:55Z
 urls:
   reference: https://puntalytics.github.io/puntr/reference
   article: https://puntalytics.github.io/puntr/articles
