@@ -21,7 +21,7 @@ jobs:
         with:
           use-public-rspm: true
           
-- name: Query dependencies
+      - name: Query dependencies
         run: |
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
@@ -51,10 +51,10 @@ jobs:
           Rscript -e 'roxygen2::roxygenise()'
           Rscript -e 'pkgdown::deploy_to_branch(new_process = TRUE, branch = "gh-pages-test")'
 
-     # - uses: r-lib/actions/setup-r-dependencies@v1
-     #   with:
-     #     extra-packages: pkgdown
-     #     needs: website
+# - uses: r-lib/actions/setup-r-dependencies@v1
+#   with:
+#     extra-packages: pkgdown
+#     needs: website
 
 #      - name: Deploy package
 #        run: |
