@@ -1,3 +1,2 @@
-.github/.gitignore
+
 *.html
-.github/workflows/pkgdown.yaml

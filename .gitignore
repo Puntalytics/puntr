@@ -5,5 +5,3 @@
 .DS_Store
 docs
 
-.gitignore
-.github/workflows/*
