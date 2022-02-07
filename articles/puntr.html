@@ -100,9 +100,9 @@ Import, clean, and calculate as follows:</p>
 <span class="va">punts_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_punts.html">import_punts</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span>
 <span class="va">punts_cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust_the_process.html">trust_the_process</a></span><span class="op">(</span><span class="va">punts_raw</span><span class="op">)</span> <span class="co"># clean</span>
 <span class="va">punts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_all.html">calculate_all</a></span><span class="op">(</span><span class="va">punts_cleaned</span><span class="op">)</span> <span class="co"># calculate custom Puntalytics metrics </span></code></pre></div>
-<pre><code><span class="co">## Calculated RERUN: 0.428 sec elapsed</span>
-<span class="co">## Calculated SHARP: 5.342 sec elapsed</span>
-<span class="co">## Calculated pEPA: 1.299 sec elapsed</span></code></pre>
+<pre><code><span class="co">## Calculated RERUN: 0.7 sec elapsed</span>
+<span class="co">## Calculated SHARP: 5.036 sec elapsed</span>
+<span class="co">## Calculated pEPA: 1.298 sec elapsed</span></code></pre>
 <p>You now have a dataframe <code>punts</code> where each row is a punt, and each column is a stat relevant to punting (including our custom metrics).</p>
 <div class="section level4">
 <h4 id="note-about-minimum-dataframe-size">Note about minimum dataframe size<a class="anchor" aria-label="anchor" href="#note-about-minimum-dataframe-size"></a>
