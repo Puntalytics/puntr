@@ -22,6 +22,9 @@ reference:
   desc: Turn a play-by-play dataframe into a dataframe summarizing player stats
 - contents:
   - starts_with("by_punter")
+- title: Miscellaneous
+  contents:
+  - getmode
 - title: Deprecated
 - contents:
   - starts_with("create")
