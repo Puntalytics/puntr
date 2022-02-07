@@ -99,15 +99,24 @@ custom_summary <- function(data, ...) {
                      SHARP_RERUN_OF = mean(SHARP_RERUN_OF, na.rm = TRUE),
                      SHARP_RERUN_PD = mean(SHARP_RERUN_PD, na.rm = TRUE),
                      ...,
-                     team = getmode_local(posteam),
-                     team_logo_espn = getmode_local(team_logo_espn),
-                     team_color = getmode_local(team_color),
-                     team_color2 = getmode_local(team_color2),
+                     team = puntr::getmode(posteam),
+                     team_logo_espn = puntr::getmode(team_logo_espn),
+                     team_color = puntr::getmode(team_color),
+                     team_color2 = puntr::getmode(team_color2),
   )
   return(.summary)
 }
-
-getmode_local <- function(v) {
-  uniqv <- unique(v)
-  uniqv[which.max(tabulate(match(v, uniqv)))]
+#' Find the mode of a column
+#' @description Hilariously, R does not have a built-in method for finding the mode of a column. \code{puntr} has included an internal
+#' helper function for this purpose for a while, and now it can be yours too!
+#' @param column The dataframe column (or any other list) from which you would like to extract the most frequently occuring item
+#' @return The mode of \code{column}
+#' @examples
+#' \dontrun{
+#' players_most_common_team <- getmode(punts_by_punter$posteam)
+#' }
+#' @export
+getmode <- function(column) {
+  uniqv <- unique(column)
+  uniqv[which.max(tabulate(match(column, uniqv)))]
 }

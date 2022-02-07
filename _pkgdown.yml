@@ -6,3 +6,26 @@ navbar:
     data:
       text: Data from past seasons
       href: https://github.com/Puntalytics/puntr-data/tree/master/data
+reference:
+- title: Get data
+  desc: Import punting play-by-play data and calculate [Puntalytics metrics](https://puntalytics.github.io/metrics.html)
+- contents:
+  - import_punts
+  - trust_the_process
+  - punt_trim
+  - calculate_all
+- subtitle: College data
+- contents:
+  - import_college_punts
+  - college_to_pro
+- title: Summarize data
+  desc: Turn a play-by-play dataframe into a dataframe summarizing player stats
+- contents:
+  - starts_with("by_punter")
+- title: Miscellaneous
+  contents:
+  - getmode
+- title: Deprecated
+- contents:
+  - starts_with("create")
+  - import_seasons

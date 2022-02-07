@@ -34,9 +34,9 @@ import_punts <- function(years, local = FALSE, path = NULL) {
 }
 
 #' Import play-by-play data
-#' @description Grab all play-by-play data, not just punts. This function pulls data directly from the \code{nflfastR-data} repo, and
-#' is purely a wrapper for ease of use.
-#' @param years A year or range of years between 1999 and 2020, inclusive
+#' @description DEPRECATED: Grab all play-by-play data, not just punts, from the \code{nflfastR-data} repo. This will be much slower than
+#' using the \code{nflfastR::load_pbp()} or \code{nflfastR::update_pbp()} functions.
+#' @param years A year or range of years between 1999 and 2021, inclusive
 #' @return A tibble \code{pbp} containing play-by-play data for the specified years
 #' @examples
 #' \dontrun{
