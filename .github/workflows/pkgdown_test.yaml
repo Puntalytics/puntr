@@ -31,4 +31,5 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           Rscript -e 'roxygen2::roxygenise()'
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE, branch = "gh-pages-test")'
 
