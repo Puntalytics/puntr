@@ -12,7 +12,7 @@ by_punter_games(punts, ..., threshold = 1)
 \item{threshold}{The minimum number of punts for a week to be included, defaults to 1}
 }
 \value{
-A tibble \code{miniG} where each row is a punter-week and each column is a stat
+A tibble where each row is a punter-week and each column is a stat
 }
 \description{
 This function is essentially a convenient wrapper for \code{dplyr::summarise}
@@ -25,6 +25,6 @@ if you have additional parameters you'd like to be summarised, the easiest thing
 }
 \examples{
 \dontrun{
-create_miniG(punts)
+by_punter_games(punts)
 }
 }

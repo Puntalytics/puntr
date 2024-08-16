@@ -12,7 +12,7 @@ by_punter_seasons(punts, ..., threshold = 32)
 \item{threshold}{The minimum number of punts for a season to be included, defaults to 32}
 }
 \value{
-A tibble \code{miniY} where each row is a punter-season and each column is a stat
+A tibble where each row is a punter-season and each column is a stat
 }
 \description{
 This function is essentially a convenient wrapper for \code{dplyr::summarise}
@@ -24,6 +24,6 @@ if you have additional parameters you'd like to be summarised, the easiest thing
 }
 \examples{
 \dontrun{
-create_miniY(punts)
+by_punter_seasons(punts)
 }
 }

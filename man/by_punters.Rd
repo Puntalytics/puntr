@@ -14,7 +14,7 @@ by_punters(punts, ..., threshold = 64)
 \item{threshold}{The minimum number of career punts needed to be included, defaults to 64}
 }
 \value{
-A tibble \code{punters} where each row is a punter and each column is a stat
+A tibble where each row is a punter and each column is a stat
 }
 \description{
 This function is essentially a convenient wrapper for \code{dplyr::summarise}
@@ -25,6 +25,8 @@ For comparison of punter seasons, see \code{puntr::by_punter_seasons}; for compa
 }
 \examples{
 \dontrun{
-create_mini(punts)
+punters <- by_punters(punts)
+punters_custom <- by_punters(punts, longest_punt = max(GrossYards))
+more_punters <- by_punters(punts, threshold=16)
 }
 }
