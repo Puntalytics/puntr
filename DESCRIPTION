@@ -15,9 +15,6 @@ LazyData: true
 Imports:
     dplyr,
     forcats,
-    ggimage,
-    ggplot2,
-    ggrepel,
     glue,
     magrittr,
     nflfastR,
