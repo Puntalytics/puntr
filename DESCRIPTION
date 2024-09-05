@@ -13,7 +13,6 @@ URL: https://puntalytics.github.io/puntr, https://github.com/Puntalytics/puntr
 Encoding: UTF-8
 LazyData: true
 Imports:
-    cfbfastR,
     dplyr,
     forcats,
     ggimage,
@@ -27,7 +26,9 @@ Imports:
     stringr,
     tibble,
     tictoc
-RoxygenNote: 7.1.1
+Remotes:
+    sportsdataverse/cfbfastR
+RoxygenNote: 7.3.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
